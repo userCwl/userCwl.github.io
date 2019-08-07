@@ -292,7 +292,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-07 10:17:26" itemprop="dateModified" datetime="2019-08-07T10:17:26+08:00">2019-08-07</time>
+                <time title="修改时间：2019-08-07 13:12:13" itemprop="dateModified" datetime="2019-08-07T13:12:13+08:00">2019-08-07</time>
               </span>
             
           
@@ -323,9 +323,11 @@
       
           
             <p>
-              多线程的实现方式实现Runnable接口需要实现run()方法
+              
+
+多线程的实现方式实现Runnable接口需要实现run()方法
 通过Thread调用start()方法来启动线程
-public class MyRunnable implements Runnable &#123;    public void run() &#123;        // ... 
+public class MyRunnable implements Runnable &#123;    public void run() &#123;        // ..
               ...
             </p>
           <!--noindex-->
@@ -366,7 +368,7 @@ public class MyRunnable implements Runnable &#123;    public void run() &#123;  
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/06/多线程扩展1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/07/java内存模型与jvm内存模型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="weilongChen">
@@ -382,7 +384,110 @@ public class MyRunnable implements Runnable &#123;    public void run() &#123;  
         
           <h1 class="post-title" itemprop="name headline">
               
-              <a href="/2019/08/06/多线程扩展1/" class="post-title-link" itemprop="url">多线程扩展1</a>
+              <a href="/2019/08/07/java内存模型与jvm内存模型/" class="post-title-link" itemprop="url">java内存模型与jvm内存模型</a>
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-07 13:02:34 / 修改时间：14:12:34" itemprop="dateCreated datePublished" datetime="2019-08-07T13:02:34+08:00">2019-08-07</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/jvm基础/" itemprop="url" rel="index"><span itemprop="name">jvm基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在了解java内存模型前有必要先认识jvm的内存模型。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/08/07/java内存模型与jvm内存模型/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+	<div>
+  
+	</div>
+	
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/06/线程安全/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="weilongChen">
+      <meta itemprop="description" content="code maker">
+      <meta itemprop="image" content="/images/head_icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="weilongChen">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+              <a href="/2019/08/06/线程安全/" class="post-title-link" itemprop="url">线程安全</a>
             
           </h1>
         
@@ -409,7 +514,7 @@ public class MyRunnable implements Runnable &#123;    public void run() &#123;  
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-07 10:04:15" itemprop="dateModified" datetime="2019-08-07T10:04:15+08:00">2019-08-07</time>
+                <time title="修改时间：2019-08-07 13:52:37" itemprop="dateModified" datetime="2019-08-07T13:52:37+08:00">2019-08-07</time>
               </span>
             
           
@@ -438,15 +543,12 @@ public class MyRunnable implements Runnable &#123;    public void run() &#123;  
     <div class="post-body" itemprop="articleBody">
 
       
-          
-            <p>
-              
-              
-            </p>
+          <p>多个线程不管以何种方式访问某个类，并且在主调代码中不需要进行同步，都能表现正确的行为。</p>
+<p>线程安全有以下几种实现方式：</p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/08/06/多线程扩展1/#more" rel="contents">
+              <a class="btn" href="/2019/08/06/线程安全/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -515,6 +617,18 @@ public class MyRunnable implements Runnable &#123;    public void run() &#123;  
 
               <time title="创建时间：2019-08-04 14:15:27" itemprop="dateCreated datePublished" datetime="2019-08-04T14:15:27+08:00">2019-08-04</time>
             </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-07 13:47:14" itemprop="dateModified" datetime="2019-08-07T13:47:14+08:00">2019-08-07</time>
+              </span>
+            
           
 
           
@@ -601,7 +715,7 @@ public class MyRunnable implements Runnable &#123;    public void run() &#123;  
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -618,7 +732,9 @@ public class MyRunnable implements Runnable &#123;    public void run() &#123;  
         
           
         
-        <span class="site-state-item-count">1</span>
+          
+        
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -635,7 +751,9 @@ public class MyRunnable implements Runnable &#123;    public void run() &#123;  
         
           
         
-        <span class="site-state-item-count">1</span>
+          
+        
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
