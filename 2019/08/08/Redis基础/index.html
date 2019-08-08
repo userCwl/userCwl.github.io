@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/web_icon.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+  <meta name="description" content="Redis 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。">
+<meta name="keywords" content="Redis基础,Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis基础">
+<meta property="og:url" content="http://yoursite.com/2019/08/08/Redis基础/index.html">
+<meta property="og:site_name" content="weilongChen">
+<meta property="og:description" content="Redis 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/08/08/Redis基础/%E8%B7%B3%E8%B7%83%E8%A1%A8%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/08/Redis基础/%E8%B7%B3%E8%B7%83%E8%A1%A8%E6%9F%A5%E6%89%BE%E6%A1%88%E4%BE%8B.png">
+<meta property="og:updated_time" content="2019-08-08T04:54:34.183Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis基础">
+<meta name="twitter:description" content="Redis 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/08/Redis基础/%E8%B7%B3%E8%B7%83%E8%A1%A8%E7%BB%93%E6%9E%84.png">
+  <link rel="canonical" href="http://yoursite.com/2019/08/08/Redis基础/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Redis基础 | weilongChen</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+	
+	<!-- 自己增加的代码：fork me github -->
+	<a href="https://github.com/userCwl">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" 
+	class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+	
+	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">weilongChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">想学习想得睡不着~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-music">
+      
+    
+
+    <a href="/music/" rel="section"><i class="menu-item-icon fa fa-fw fa-music"></i> <br>音乐</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/Redis基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="weilongChen">
+      <meta itemprop="description" content="code maker">
+      <meta itemprop="image" content="/images/head_icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="weilongChen">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">Redis基础
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-08 10:03:06 / 修改时间：12:54:34" itemprop="dateCreated datePublished" datetime="2019-08-08T10:03:06+08:00">2019-08-08</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Redis 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。</p>
+<a id="more"></a>
+
+<p>键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</p>
+<p>Redis 支持很多特性，例如将内存中的数据持久化到硬盘中，使用复制来扩展读性能，使用分片来扩展写性能。</p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><table>
+<thead>
+<tr>
+<th align="center">数据类型</th>
+<th align="center">可以存储的值</th>
+<th align="center">操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">string</td>
+<td align="center">字符串，整数或浮点数</td>
+<td align="center">对整个字符串或者字符串的一部分执行操作；对整数和浮点数执行自增或自减操作</td>
+</tr>
+<tr>
+<td align="center">hash</td>
+<td align="center">包含键值对的无序散列表</td>
+<td align="center">添加，获取，移除单个键值对；获取所有键值对；检查某个键是否存在</td>
+</tr>
+<tr>
+<td align="center">list</td>
+<td align="center">列表</td>
+<td align="center">从两端压入或者弹出元素；对单个或多个元素进行修剪</td>
+</tr>
+<tr>
+<td align="center">set（集合）</td>
+<td align="center">无序集合</td>
+<td align="center">添加，获取，移除某个元素；检查一个元素是否存在于集合中；计算交集，并集，差集；从集合里随机获取元素</td>
+</tr>
+<tr>
+<td align="center">zset</td>
+<td align="center">有序集合</td>
+<td align="center">添加，获取，删除元素；根据分值范围或者成员来获取元素；计算一个键的排名</td>
+</tr>
+</tbody></table>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>string是redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。</p>
+<p>string类型是二进制安全的。意思是redis的string可以包含任何数据。比如jpg图片或者序列化的对象。</p>
+<p>string类型是Redis最基本的数据类型，一个键最大能存储512MB。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; set hello world</span><br><span class="line">OK</span><br><span class="line">&gt; get hello</span><br><span class="line">"world"</span><br><span class="line">&gt; del hello</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; get hello</span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
+
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><p>Redis 列表是简单的字符串列表，按照插入顺序排序。</p>
+<p>基于链表实现的列表。</p>
+<p>你可以添加一个元素到列表的头部（左边）或者尾部（右边）。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt; rpush list-key item</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; rpush list-key item2</span><br><span class="line">(integer) 2</span><br><span class="line">&gt; rpush list-key item</span><br><span class="line">(integer) 3</span><br><span class="line"></span><br><span class="line">&gt; lrange list-key 0 -1</span><br><span class="line">1) "item"</span><br><span class="line">2) "item2"</span><br><span class="line">3) "item"</span><br><span class="line"></span><br><span class="line">&gt; lindex list-key 1</span><br><span class="line">"item2"</span><br><span class="line"></span><br><span class="line">&gt; lpop list-key</span><br><span class="line">"item"</span><br><span class="line"></span><br><span class="line">&gt; lrange list-key 0 -1</span><br><span class="line">1) "item2"</span><br><span class="line">2) "item"</span><br></pre></td></tr></table></figure>
+
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>Redis的Set是string类型的无序集合，且不允许重复的成员.。</p>
+<p>集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&gt; sadd set-key item</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; sadd set-key item2</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; sadd set-key item3</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; sadd set-key item</span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line">&gt; smembers set-key</span><br><span class="line">1) "item"</span><br><span class="line">2) "item2"</span><br><span class="line">3) "item3"</span><br><span class="line"></span><br><span class="line">&gt; sismember set-key item4</span><br><span class="line">(integer) 0</span><br><span class="line">&gt; sismember set-key item</span><br><span class="line">(integer) 1</span><br><span class="line"></span><br><span class="line">&gt; srem set-key item2</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; srem set-key item2</span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line">&gt; smembers set-key</span><br><span class="line">1) "item"</span><br><span class="line">2) "item3"</span><br></pre></td></tr></table></figure>
+
+<h3 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h3><p>Redis hash 是一个键值对集合。</p>
+<p>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&gt; hset hash-key sub-key1 value1</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; hset hash-key sub-key2 value2</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; hset hash-key sub-key1 value1</span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line">&gt; hgetall hash-key</span><br><span class="line">1) "sub-key1"</span><br><span class="line">2) "value1"</span><br><span class="line">3) "sub-key2"</span><br><span class="line">4) "value2"</span><br><span class="line"></span><br><span class="line">&gt; hdel hash-key sub-key2</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; hdel hash-key sub-key2</span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line">&gt; hget hash-key sub-key1</span><br><span class="line">"value1"</span><br><span class="line"></span><br><span class="line">&gt; hgetall hash-key</span><br><span class="line">1) "sub-key1"</span><br><span class="line">2) "value1"</span><br></pre></td></tr></table></figure>
+
+<h3 id="zset"><a href="#zset" class="headerlink" title="zset"></a>zset</h3><p>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。</p>
+<p>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。</p>
+<p>zset的成员是唯一的,但分数(score)却可以重复。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt; zadd zset-key 728 member1</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; zadd zset-key 982 member0</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; zadd zset-key 982 member0</span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line">&gt; zrange zset-key 0 -1 withscores</span><br><span class="line">1) "member1"</span><br><span class="line">2) "728"</span><br><span class="line">3) "member0"</span><br><span class="line">4) "982"</span><br><span class="line"></span><br><span class="line">&gt; zrangebyscore zset-key 0 800 withscores</span><br><span class="line">1) "member1"</span><br><span class="line">2) "728"</span><br><span class="line"></span><br><span class="line">&gt; zrem zset-key member1</span><br><span class="line">(integer) 1</span><br><span class="line">&gt; zrem zset-key member1</span><br><span class="line">(integer) 0</span><br><span class="line"></span><br><span class="line">&gt; zrange zset-key 0 -1 withscores</span><br><span class="line">1) "member0"</span><br><span class="line">2) "982"</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* This is our hash table structure. Every dictionary has two of this as we</span></span><br><span class="line"><span class="comment"> * implement incremental rehashing, for the old to the new table. */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictht</span> &#123;</span></span><br><span class="line">    dictEntry **table;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> size;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sizemask;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> used;</span><br><span class="line">&#125; dictht;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>table</code>：存储节点的数组</li>
+<li><code>size</code>：table数组的长度</li>
+<li><code>sizemask</code>：size-1，用于在添加节点时计算节点在table中的位置</li>
+<li><code>used</code>：节点数量</li>
+</ul>
+<h3 id="哈希表节点"><a href="#哈希表节点" class="headerlink" title="哈希表节点"></a>哈希表节点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">    <span class="keyword">void</span> *key;</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">void</span> *val;</span><br><span class="line">        <span class="keyword">uint64_t</span> u64;</span><br><span class="line">        <span class="keyword">int64_t</span> s64;</span><br><span class="line">        <span class="keyword">double</span> d;</span><br><span class="line">    &#125; v;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; dictEntry;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>key</code>：节点的key</li>
+<li><code>union</code>：节点的value（可以是指针、unit64_t整数、int64_t整数）</li>
+<li><code>next</code>：下一个节点的地址</li>
+</ul>
+<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dict</span> &#123;</span></span><br><span class="line">    dictType *type;</span><br><span class="line">    <span class="keyword">void</span> *privdata;</span><br><span class="line">    dictht ht[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">long</span> rehashidx; <span class="comment">/* rehashing not in progress if rehashidx == -1 */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> iterators; <span class="comment">/* number of iterators currently running */</span></span><br><span class="line">&#125; dict;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>type</code>：操作哈希表的各种函数</li>
+<li><code>privdata</code>：上述函数所需的入参</li>
+<li><code>ht[2]</code>：存储两个哈希表，一个正常使用，另一个在rehash时使用。</li>
+</ul>
+<h3 id="rehash"><a href="#rehash" class="headerlink" title="rehash"></a>rehash</h3><ol>
+<li><p>何时进行rehash？</p>
+<p>当加载因子（load factor）大于1或小于0.1时就要进行rehash。<br>加载因子计算公式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load_factor = ht[<span class="number">0</span>].used / ht[<span class="number">0</span>].size</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新哈希表大小计算公式</p>
+<p>当需要进行扩容/缩容的时候，究竟创建多大的哈希表呢？这取决于如下公式：</p>
+<ul>
+<li>若要进行扩容，则新的哈希表的大小=第一个大于等于h[0].used*2的2的n次方。</li>
+<li>若要进行缩容，则新的哈希表的大小=第一个大于等于h[0].used的2的n次方。</li>
+</ul>
+</li>
+<li><p>rehash过程</p>
+<ol>
+<li>创建一个新的哈希表h[1]，大小由上述公式计算得出；</li>
+<li>将字典的rehashidx值从-1改为0；</li>
+<li>依次遍历ht[0]上的所有节点，依次转移到ht[1]上去；</li>
+<li>释放ht[0]的内存空间；</li>
+</ol>
+</li>
+<li><p>渐进式rehash</p>
+<ul>
+<li>rehash过程中需要将所有节点迁移到新的哈希表中，如果节点个数很多的情况下，迁移的过程将非常漫长，那么程序将处于停止等待状态。所以事实上，Redis的rehash过程是分多次、分布完成的。</li>
+<li>在rehash过程中，每次对哈希表进行增删改查外，还要将ht[0][rehashidx]上的所有节点迁移到ht[1]中，并将rehashidx+1。从而几次操作后，ht[0]上的所有节点均被迁移至ht[1]中，rehash过程完成。</li>
+<li>在rehash过程中，对哈希表的添加操作均在ht[1]上完成，ht[0]只减不增。</li>
+</ul>
+</li>
+</ol>
+<h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><p>是有序集合（zset，即sorted set）的底层实现之一。</p>
+<p>并且跳跃表结构在Redis中运用场景只有一个，就是作为有序列表zset的使用。</p>
+<p>跳跃表的优缺点：</p>
+<p>跳跃表的性能可以保证在查找，删除，添加等操作的时候在对数期望时间内完成，这个性能是可以和平衡树来相比较的，而且在实现方面比平衡树要优雅，这就是跳跃表的长处。跳跃表的缺点就是需要的存储空间比较大，属于利用空间来换取时间的数据结构。</p>
+<p>跳跃表是基于多指针有序链表实现的，可以看成多个有序链表，如下图所示</p>
+<p><img src="/2019/08/08/Redis基础/%E8%B7%B3%E8%B7%83%E8%A1%A8%E7%BB%93%E6%9E%84.png" alt></p>
+<p>在查找时，从上层指针开始查找，找到对应的区间之后再到下一层去查找。下图演示了查找 22 的过程。</p>
+<p><img src="/2019/08/08/Redis基础/%E8%B7%B3%E8%B7%83%E8%A1%A8%E6%9F%A5%E6%89%BE%E6%A1%88%E4%BE%8B.png" alt></p>
+<p>与红黑树等平衡树相比，跳跃表具有以下优点：</p>
+<ul>
+<li>插入速度非常快速，因为不需要进行旋转等操作来维护平衡性；</li>
+<li>更容易实现；</li>
+<li>支持无锁操作。</li>
+</ul>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><h3 id="计数器"><a href="#计数器" class="headerlink" title="计数器"></a>计数器</h3><p>可以对 String 进行自增自减运算，从而实现计数器功能。</p>
+<p>Redis 这种内存型数据库的读写性能非常高，很适合存储频繁读写的计数量。</p>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>将热点数据放到内存中，设置内存的最大使用量以及淘汰策略来保证缓存的命中率。</p>
+<h3 id="查找表"><a href="#查找表" class="headerlink" title="查找表"></a>查找表</h3><p>例如 DNS 记录就很适合使用 Redis 进行存储。</p>
+<p>查找表和缓存类似，也是利用了 Redis 快速的查找特性。但是查找表的内容不能失效，而缓存的内容可以失效，因为缓存不作为可靠的数据来源。</p>
+<h3 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h3><p>List 是一个双向链表，可以通过 lpush 和 rpop 写入和读取消息</p>
+<p>不过最好使用 Kafka、RabbitMQ 等消息中间件。</p>
+<h3 id="会话缓存"><a href="#会话缓存" class="headerlink" title="会话缓存"></a>会话缓存</h3><p>可以使用 Redis 来统一存储多台应用服务器的会话信息。</p>
+<p>当应用服务器不再存储用户的会话信息，也就不再具有状态，一个用户可以请求任意一个应用服务器，从而更容易实现高可用性以及可伸缩性。</p>
+<h3 id="分布式锁实现"><a href="#分布式锁实现" class="headerlink" title="分布式锁实现"></a>分布式锁实现</h3><p>在分布式场景下，无法使用单机环境下的锁来对多个节点上的进程进行同步。</p>
+<p>可以使用 Redis 自带的 SETNX 命令实现分布式锁，除此之外，还可以使用官方提供的 RedLock 分布式锁实现。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>Set 可以实现交集、并集等操作，从而实现共同好友等功能。</p>
+<p>ZSet 可以实现有序性操作，从而实现排行榜等功能。</p>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+	</div>
+	
+    <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/Redis基础/" rel="tag"><i class="fa fa-tag"></i> Redis基础</a>
+          
+            <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
+          
+        </div>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2019/08/07/java内存模型与jvm内存模型/" rel="next" title="java内存模型与jvm内存模型">
+                <i class="fa fa-chevron-left"></i> java内存模型与jvm内存模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+              <a href="/2019/08/08/Hexo-Github搭建个人博客/" rel="prev" title="Hexo + Github搭建个人博客">
+                Hexo + Github搭建个人博客 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/head_icon.jpg"
+      alt="weilongChen">
+  <p class="site-author-name" itemprop="name">weilongChen</p>
+  <div class="site-description motion-element" itemprop="description">code maker</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">1.1.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">1.2.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">1.3.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash"><span class="nav-number">1.4.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zset"><span class="nav-number">1.5.</span> <span class="nav-text">zset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-number">2.</span> <span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希表"><span class="nav-number">2.1.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希表节点"><span class="nav-number">2.2.</span> <span class="nav-text">哈希表节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字典"><span class="nav-number">2.3.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rehash"><span class="nav-number">2.4.</span> <span class="nav-text">rehash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳跃表"><span class="nav-number">2.5.</span> <span class="nav-text">跳跃表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">3.</span> <span class="nav-text">使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计数器"><span class="nav-number">3.1.</span> <span class="nav-text">计数器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存"><span class="nav-number">3.2.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找表"><span class="nav-number">3.3.</span> <span class="nav-text">查找表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息队列"><span class="nav-number">3.4.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话缓存"><span class="nav-number">3.5.</span> <span class="nav-text">会话缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式锁实现"><span class="nav-number">3.6.</span> <span class="nav-text">分布式锁实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">3.7.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-envelope"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">weilongChen</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/affix.js?v=7.3.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
