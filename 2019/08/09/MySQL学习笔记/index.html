@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/web_icon.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+  <meta name="description" content="MySQL是一种常用的关系型数据库">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/08/09/MySQL学习笔记/index.html">
+<meta property="og:site_name" content="weilongChen">
+<meta property="og:description" content="MySQL是一种常用的关系型数据库">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-09T09:13:42.939Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL学习笔记">
+<meta name="twitter:description" content="MySQL是一种常用的关系型数据库">
+  <link rel="canonical" href="http://yoursite.com/2019/08/09/MySQL学习笔记/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>MySQL学习笔记 | weilongChen</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+	
+	<!-- 自己增加的代码：fork me github -->
+	<a href="https://github.com/userCwl">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" 
+	class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+	
+	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">weilongChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">想学习想得睡不着~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-music">
+      
+    
+
+    <a href="/music/" rel="section"><i class="menu-item-icon fa fa-fw fa-music"></i> <br>音乐</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/09/MySQL学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="weilongChen">
+      <meta itemprop="description" content="code maker">
+      <meta itemprop="image" content="/images/head_icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="weilongChen">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">MySQL学习笔记
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-09 17:04:24 / 修改时间：17:13:42" itemprop="dateCreated datePublished" datetime="2019-08-09T17:04:24+08:00">2019-08-09</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>MySQL是一种常用的关系型数据库</center>
+
+<a id="more"></a>
+
+<h2 id="优化与执行"><a href="#优化与执行" class="headerlink" title="优化与执行"></a>优化与执行</h2><p>MySQL会解析查询，并创建内部数据结构（解析树），然后对其进行各种优化，包括重写查询、决定表的读取顺序，以及选择合适的索引等。</p>
+<h2 id="并发控制"><a href="#并发控制" class="headerlink" title="并发控制"></a>并发控制</h2><h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p>描述：在处理并发读或者写时，可以通过实现一个由两种类型的锁组成的锁系统来解决问题。这种锁就是排他锁（exclusive lock）和共享锁（share lock），也称为读锁（read lock）和写锁（write lock）。</p>
+<h3 id="锁粒度"><a href="#锁粒度" class="headerlink" title="锁粒度"></a>锁粒度</h3><p>描述：加锁需要消耗资源，锁的各种操作，包括获得锁，释放锁等都会增加开销。所谓锁策略就是在开销和数据的安全性之间寻求平衡。MySQL提供了多种选择，每种MySQL存储引擎都可以实现自己的锁策略和锁粒度</p>
+<ul>
+<li><strong>表锁（table lock）</strong>：表锁是MySQL中最基本的锁策略，并且是开销最小的策略，它会锁定整一张表，一个用户在对表进行写操作（插入、删除和更新等）前，需要先获得写锁，这会阻塞其他用户对该表的读写操作。写锁比读锁有更高的优先级，因此，一个写锁请求可能会插入到读锁队列的前面。</li>
+<li><strong>行锁（row lock）</strong>：行级锁可以最大程度的支持并发处理（但是开销大），InnoDB和XtraDB，以及其他一些存储引擎实现了行级锁。行级锁只在存储引擎层实现，服务层是完全不了解存储引擎中的锁实现。</li>
+</ul>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="事务的ACID概念（事务的特性）"><a href="#事务的ACID概念（事务的特性）" class="headerlink" title="事务的ACID概念（事务的特性）"></a>事务的ACID概念（事务的特性）</h3><ul>
+<li><strong>原子性（atomicity）：</strong>一个事务被视为一个不可再分割的最小工作单元，整个事务中的操作要么全部完成、要么全部失败回滚，不能只执行一部分。</li>
+<li><strong>一致性（consistency）：</strong>数据库总是从一个一致的状态转换到另外一个一致性的状态。</li>
+<li><strong>隔离性（isolation）：</strong>一个事务所做的修改在最终提交前，对其他事务是不可见的。</li>
+<li><strong>持久性（durability）：</strong>一旦事务提交，其所做的修改就会永久保存到数据库中。</li>
+</ul>
+<h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h3><ul>
+<li><p><strong>read uncommitted（未提交读）：</strong>事务的修改，即使没有提交，对其他事务也是可见的，事务可以读取未提交的数据，也就是脏读（Dirty Read）。实际应用中基本很少使用此级别控制。</p>
+</li>
+<li><p><strong>read committed（提交读）：</strong>大多数数据库系统默认隔离级别是read committed（但MySQL不是），一个事务从开始直到提交之前，所做的修改对其他事务都是不可见的，也叫不可重复读。</p>
+</li>
+<li><p><strong>repeatable read（可重复读）：</strong>解决了脏读的问题，该级别保证了同一个事务中多次读取同样的记录的结果是一致的。但是理论上，可重复读隔离级别还是无法解决另一个幻读的问题，所谓幻读，指的是某个事务在读取某个范围内的记录时，另一个事务又在该范围内插入了新的记录，当之前的事务再次读取该 范围的记录时，就会产生幻行。</p>
+<p><strong>补充：</strong>InnoDB和XtraDB存储引擎通过多版本并发控制解决了幻读的问题；</p>
+<p>​            可重复读是MySQL的默认事务隔离级别。    </p>
+</li>
+<li><p><strong>seializable（可串行化）：</strong>是最高的隔离级别，它通过强制事务串行执行，避免了幻读问题。serializable会在读取的每一行数据加锁，所以可能导致大量的超时和锁争用问题，所以实际上很少用此级别。</p>
+</li>
+</ul>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>描述：死锁是指两个或者多个事务在同一资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象。</p>
+<p><strong>死锁产生的四个必要条件：</strong></p>
+<ul>
+<li>互斥条件：任意时刻一个资源只能给一个进程使用，其他进程若申请一个资源，而该资源被另一进程占有时，则申请者将等待直到资源被占有者释放。</li>
+<li>不可剥夺条件：进程所获得的资源在未使用完毕之前，不被其他线程强行剥夺，而只能由获得该资源的进程释放。</li>
+<li>请求和保持条件：进程每次申请它所需要的一部分资源，在申请新的资源时，继续占用已分配到的资源。</li>
+<li>循环等待条件：形成一个请求资源等待的环路</li>
+</ul>
+<p><strong>补充：</strong>InnoDB目前处理死锁的方法是，将持有最少行级排他锁的事务进行回滚（相对简单的死锁回滚算法）。</p>
+<h3 id="事务日志"><a href="#事务日志" class="headerlink" title="事务日志"></a>事务日志</h3><p>描述：事务日志可以提高事务的效率，使用事务日志，存储引擎在修改表数据时只需要修改其内存拷贝，再把该修改行为记录到持久在硬盘上的事务日志中，而不用每次都将修改的数据本身持久到磁盘。事务日志持久化后，内存中被修改的数据在后台可以慢慢刷回到磁盘。目前大多数存储引擎都是这样实现的，通常称之为预写式日志，修改数据时需要写两次磁盘。</p>
+<p><strong>补充：</strong>事务日志采取的是追加的方式，因此写日志的操作是磁盘上的一小块区域内的顺序I/O，而不像随机I/O需要在磁盘多个地方移动磁头，所以采用事务日志的方式相对来说要快的多；</p>
+<p>​            如果数据的修改已经记录到事务日志中并持久化，但数据本身还没写回磁盘，此时系统崩溃，存储引擎在重启的时候能自动恢复这部分修改的数据，具体恢复方式由存储引擎决定。</p>
+<h3 id="MySQL中的事务"><a href="#MySQL中的事务" class="headerlink" title="MySQL中的事务"></a>MySQL中的事务</h3><p>描述：MySQL默认采用自动提交（autocommit）模式，即若不显式地开始一个事务，则每个查询都都被当做一个事务执行提交操作。</p>
+<p><strong>补充：</strong>非事务类型的表的变更无法回滚</p>
+<ol>
+<li><p><strong>设置隔离级别</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SET TRANSACTION ISOLATION LEVEL</span><br><span class="line">//也可以只改变当前会话的隔离级别：</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITED</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="多版本并发控制"><a href="#多版本并发控制" class="headerlink" title="多版本并发控制"></a>多版本并发控制</h3><p>描述：MVCC是行级锁的一个变种，在很多情况下避免了加锁，减少了开销。</p>
+<p>MVCC的实现：是通过保存数据在某个时间点的快照来实现的，也就是说，不管需要执行多久，每个事务看到的数据都是一致的。根据事务开始的时间不同，每个事务对同一张表，同一个时刻看到的数据可能是不一样的。</p>
+<p><strong>InnoDB的MVCC</strong>：是通过在每行记录后面保存两个隐藏的列来实现的，一个是保存了行的创建时间，一个是保存行的过期时间（或删除时间），并且存储的并不是实际的时间值，而是系统版本号（system version number），每开启一个新的事务，系统版本号都会递增。事务开始时的系统版本号作为该事务的版本号，用来和查询到的每行记录的版本号进行比较。</p>
+<p>​    例如：</p>
+<p>​    SELECT：</p>
+<p>​            InnoDB会根据两个条件查询每行记录：</p>
+<p>​            a. InnoDB只查找版本号早于当前事务版本的记录行（即行的系统版本号小于或者等于事务的系统版本号）。确保事务读取的行，要么在事务开始之前就已经存在，要么是自身插入或修改过的。</p>
+<p>​            b. 行的删除版本要么未定义，要么大于当前事务版本号。确保事务读取到的行，在事务开始之前未被删除。</p>
+<p>​    INSERT：</p>
+<p>​            InnoDB为新插入的每一行保存当前的系统版本号作为行版本号</p>
+<p>​    DELETE：</p>
+<p>​            InnoDB为删除的每一行保存当前的系统版本号为行删除标识</p>
+<p>​    UPDATE：</p>
+<p>​            InnoDB为插入一行新纪录，保存当前系统版本号作为行版本号，同时保存当前系统版本号到原来的行作为删除标识。</p>
+<p><strong>补充：</strong>保存这两个额外系统版本号，使大多数读操作不用加锁；不足之处就是需要额外的空间开销，需要一些额外的行检查工作和维护工作。</p>
+<p>​            MVCC只在repeatable read（可重复读）和read committed（提交读）两个隔离级别下工作。</p>
+<h3 id="MySQL的存储引擎"><a href="#MySQL的存储引擎" class="headerlink" title="MySQL的存储引擎"></a>MySQL的存储引擎</h3><ol>
+<li><p><strong>InnoDB存储引擎：</strong></p>
+<p>描述：InnoDB是MySQL的默认事务型引擎，也是最重要的、使用最广泛的存储引擎。</p>
+<ul>
+<li>InnoDB的数据存储在表空间（tablespace）中，表空间是InnoDB管理的一个黑盒子。</li>
+<li>InnoDB采用MVCC来支持高并发，并且实现了四个隔离级别，其默认隔离级别是repeatable read（可重复读），并且通过间隙锁（next-key lock）策略防止幻读出现。间隙锁使得InnoDB不仅仅锁定查询所涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</li>
+<li>InnoDB表是基于聚簇索引，InnoDB的索引结构与其他的存储引擎有很大的不同；聚簇索引对主键的查询性能很高，不过它的二级索引（secondary index，非主键索引）中必须包含主键，所以如果主键列很大的话，其他的所有索引都会很大。</li>
+</ul>
+</li>
+<li><p><strong>MyISAM存储引擎：</strong></p>
+<p>描述：在MySQL5.1及之前，默认的存储引擎是MyISAM。MyISAM不支持事务和行级锁，而且崩溃后无法安全恢复（应该默认使用InnoDB存储引擎）</p>
+<ul>
+<li><strong>MyISAM压缩表：</strong>如果表在创建并导入数据后，不会再进行修改操作，就适合采用MyISAM压缩表。</li>
+</ul>
+</li>
+<li><p><strong>转换表的存储引擎：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.修改表的存储引擎(耗时长)</span><br><span class="line">mysql&gt; ALTER TABLE mytable ENGINE = InnoDB;</span><br><span class="line">2.先创建一个新的存储引擎的表，再导入数据</span><br><span class="line">mysql&gt; CREATE TABLE innoDB_table LIKE myisam_able;</span><br><span class="line">mysql&gt; ALTER TABLE innoDB_table ENGINE = InnoDB;</span><br><span class="line">mysql&gt; INSET INTO innoDB SELECT * from myisam_table;</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+	</div>
+	
+    <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          
+        </div>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2019/08/09/Java 集合/" rel="next" title="Java 集合">
+                <i class="fa fa-chevron-left"></i> Java 集合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+              <a href="/2019/08/10/数据库原理/" rel="prev" title="数据库原理">
+                数据库原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/head_icon.jpg"
+      alt="weilongChen">
+  <p class="site-author-name" itemprop="name">weilongChen</p>
+  <div class="site-description motion-element" itemprop="description">code maker</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#优化与执行"><span class="nav-number">1.</span> <span class="nav-text">优化与执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发控制"><span class="nav-number">2.</span> <span class="nav-text">并发控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁"><span class="nav-number">2.1.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁粒度"><span class="nav-number">2.2.</span> <span class="nav-text">锁粒度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">3.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的ACID概念（事务的特性）"><span class="nav-number">3.1.</span> <span class="nav-text">事务的ACID概念（事务的特性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离级别"><span class="nav-number">3.2.</span> <span class="nav-text">隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁"><span class="nav-number">3.3.</span> <span class="nav-text">死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务日志"><span class="nav-number">3.4.</span> <span class="nav-text">事务日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL中的事务"><span class="nav-number">3.5.</span> <span class="nav-text">MySQL中的事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多版本并发控制"><span class="nav-number">3.6.</span> <span class="nav-text">多版本并发控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL的存储引擎"><span class="nav-number">3.7.</span> <span class="nav-text">MySQL的存储引擎</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-envelope"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">weilongChen</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/affix.js?v=7.3.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>

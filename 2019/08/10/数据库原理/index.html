@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/web_icon.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+  <meta name="description" content="数据库的设计理论，事务，隔离级别，锁机制">
+<meta name="keywords" content="数据库原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库原理">
+<meta property="og:url" content="http://yoursite.com/2019/08/10/数据库原理/index.html">
+<meta property="og:site_name" content="weilongChen">
+<meta property="og:description" content="数据库的设计理论，事务，隔离级别，锁机制">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E7%90%86%E8%A7%A3ACID.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%B8%A2%E5%A4%B1%E4%BF%AE%E6%94%B9.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E8%AF%BB%E8%84%8F%E6%95%B0%E6%8D%AE.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E5%B9%BB%E5%BD%B1%E8%AF%BB.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%AF%B9%E5%BA%94%E7%BB%93%E6%9E%9C.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E8%AF%BB%E5%86%99%E9%94%81%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E6%84%8F%E5%90%91%E9%94%81%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%B8%80%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%BA%8C%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%B8%89%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE.png">
+<meta property="og:updated_time" content="2019-08-10T11:26:16.307Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库原理">
+<meta name="twitter:description" content="数据库的设计理论，事务，隔离级别，锁机制">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/10/数据库原理/%E7%90%86%E8%A7%A3ACID.png">
+  <link rel="canonical" href="http://yoursite.com/2019/08/10/数据库原理/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>数据库原理 | weilongChen</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+	
+	<!-- 自己增加的代码：fork me github -->
+	<a href="https://github.com/userCwl">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" 
+	class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+	
+	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">weilongChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">想学习想得睡不着~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-music">
+      
+    
+
+    <a href="/music/" rel="section"><i class="menu-item-icon fa fa-fw fa-music"></i> <br>音乐</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/数据库原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="weilongChen">
+      <meta itemprop="description" content="code maker">
+      <meta itemprop="image" content="/images/head_icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="weilongChen">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">数据库原理
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-10 10:49:41 / 修改时间：19:26:16" itemprop="dateCreated datePublished" datetime="2019-08-10T10:49:41+08:00">2019-08-10</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>数据库的设计理论，事务，隔离级别，锁机制</center>
+
+<a id="more"></a>
+
+<p>数据库可为分关系型数据库和非关系型数据库，如MySQL为关系型数据库，Redis是非关系型数据库</p>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>事务(Transaction)，一般是指要做的或所做的事情。在计算机术语中是指访问并可能更新数据库中各种数据项的一个程序执行单元(unit)。在计算机术语中，事务通常就是指数据库事务。</p>
+<p>事务有以下4大特性（ACID）</p>
+<h3 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h3><h4 id="原子性（Atomicity）"><a href="#原子性（Atomicity）" class="headerlink" title="原子性（Atomicity）"></a>原子性（Atomicity）</h4><p>一个事务被视为一个不可再分割的最小工作单元，整个事务中的操作要么全部完成、要么全部失败回滚，不能只执行一部分。</p>
+<h4 id="一致性（Consistency）"><a href="#一致性（Consistency）" class="headerlink" title="一致性（Consistency）"></a>一致性（Consistency）</h4><p>数据库总是从一个一致的状态转换到另外一个一致性的状态。</p>
+<h4 id="隔离性（Isolation）"><a href="#隔离性（Isolation）" class="headerlink" title="隔离性（Isolation）"></a>隔离性（Isolation）</h4><p>一个事务所做的修改在最终提交前，对其他事务是不可见的。</p>
+<h4 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h4><p>一旦事务提交，其所做的修改就会永久保存到数据库中。</p>
+<h3 id="AutoCommited"><a href="#AutoCommited" class="headerlink" title="AutoCommited"></a>AutoCommited</h3><p>MySQL 默认采用自动提交模式。也就是说，如果不显式使用<code>START TRANSACTION</code>语句来开始一个事务，那么每个查询都会被当做一个事务自动提交。</p>
+<h3 id="理解ACID"><a href="#理解ACID" class="headerlink" title="理解ACID"></a>理解ACID</h3><p>事务的 ACID 特性概念简单，但不是很好理解，主要是因为这几个特性不是一种平级关系：</p>
+<ul>
+<li>只有满足一致性，事务的执行结果才是正确的。</li>
+<li>在无并发的情况下，事务串行执行，隔离性一定能够满足。此时只要能满足原子性，就一定能满足一致性。</li>
+<li>在并发的情况下，多个事务并行执行，事务不仅要满足原子性，还需要满足隔离性，才能满足一致性。</li>
+<li>事务满足持久化是为了能应对数据库崩溃的情况。</li>
+</ul>
+<p><img src="/2019/08/10/数据库原理/%E7%90%86%E8%A7%A3ACID.png" alt></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>为了保证事务的正确性即事务的一致性，我们需要先保证事务的原子性和隔离性。</p>
+<h2 id="并发一致性问题"><a href="#并发一致性问题" class="headerlink" title="并发一致性问题"></a>并发一致性问题</h2><p>在并发环境下，事务的隔离性很难保证，因此会出现很多并发一致性问题。</p>
+<h3 id="丢失修改"><a href="#丢失修改" class="headerlink" title="丢失修改"></a>丢失修改</h3><p>T1 和 T2 两个事务都对一个数据进行修改，T1 先修改，T2 随后修改，T2 的修改覆盖了 T1 的修改。</p>
+<p><img src="/2019/08/10/数据库原理/%E4%B8%A2%E5%A4%B1%E4%BF%AE%E6%94%B9.png" alt></p>
+<h3 id="读脏数据"><a href="#读脏数据" class="headerlink" title="读脏数据"></a>读脏数据</h3><p>T1 修改一个数据，T2 随后读取这个数据。如果 T1 撤销了这次修改，那么 T2 读取的数据是脏数据。</p>
+<p><img src="/2019/08/10/数据库原理/%E8%AF%BB%E8%84%8F%E6%95%B0%E6%8D%AE.png" alt></p>
+<h3 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h3><p>T2 读取一个数据，T1 对该数据做了修改。如果 T2 再次读取这个数据，此时读取的结果和第一次读取的结果不同。</p>
+<p><img src="/2019/08/10/数据库原理/%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB.png" alt>    </p>
+<h3 id="幻影读"><a href="#幻影读" class="headerlink" title="幻影读"></a>幻影读</h3><p>T1 读取某个范围的数据，T2 在这个范围内插入新的数据，T1 再次读取这个范围的数据，此时读取的结果和和第一次读取的结果不同。</p>
+<p><img src="/2019/08/10/数据库原理/%E5%B9%BB%E5%BD%B1%E8%AF%BB.png" alt></p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>产生并发不一致性问题主要原因是破坏了事务的隔离性，解决方法是通过并发控制来保证隔离性。并发控制可以通过封锁来实现，但是封锁操作需要用户自己控制，相当复杂。数据库管理系统提供了事务的隔离级别，让用户以一种更轻松的方式处理并发一致性问题。</p>
+<h2 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h2><h3 id="read-uncommitted（未提交读）"><a href="#read-uncommitted（未提交读）" class="headerlink" title="read uncommitted（未提交读）"></a>read uncommitted（未提交读）</h3><p>事务的修改，即使没有提交，对其他事务也是可见的，事务可以读取未提交的数据，也就是脏读（Dirty Read）。实际应用中基本很少使用此级别控制。</p>
+<h3 id="read-committed-提交读"><a href="#read-committed-提交读" class="headerlink" title="read committed(提交读)"></a>read committed(提交读)</h3><p>大多数数据库系统默认隔离级别是read committed（但MySQL不是），一个事务从开始直到提交之前，所做的修改对其他事务都是不可见的，也叫不可重复读。</p>
+<h3 id="repeatable-read（可重复读）"><a href="#repeatable-read（可重复读）" class="headerlink" title="repeatable read（可重复读）"></a>repeatable read（可重复读）</h3><p>解决了脏读的问题，该级别保证了同一个事务中多次读取同样的记录的结果是一致的。但是理论上，可重复读隔离级别还是无法解决另一个幻读的问题，所谓幻读，指的是某个事务在读取某个范围内的记录时，另一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，就会产生幻行。</p>
+<p><strong>补充：</strong>InnoDB和XtraDB存储引擎通过多版本并发控制解决了幻读的问题；</p>
+<p>​            可重复读是MySQL的默认事务隔离级别。</p>
+<h3 id="seializable（可串行化）"><a href="#seializable（可串行化）" class="headerlink" title="seializable（可串行化）"></a>seializable（可串行化）</h3><p>是最高的隔离级别，它通过强制事务串行执行，避免了幻读问题。serializable会在读取的每一行数据加锁，所以可能导致大量的超时和锁争用问题，所以实际上很少用此级别，而<strong>其它隔离级别通常不需要加锁。</strong></p>
+<p>小总结：</p>
+<p><img src="/2019/08/10/数据库原理/%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%AF%B9%E5%BA%94%E7%BB%93%E6%9E%9C.png" alt></p>
+<h2 id="封锁机制"><a href="#封锁机制" class="headerlink" title="封锁机制"></a>封锁机制</h2><h3 id="封锁粒度"><a href="#封锁粒度" class="headerlink" title="封锁粒度"></a>封锁粒度</h3><p>MySQL 中提供了两种封锁粒度：行级锁以及表级锁。</p>
+<p>应该尽量只锁定需要修改的那部分数据，而不是所有的资源。锁定的数据量越少，发生锁争用的可能就越小，系统的并发程度就越高。</p>
+<p>但是加锁需要消耗资源，锁的各种操作（包括获取锁、释放锁、以及检查锁状态）都会增加系统开销。因此封锁粒度越小，系统开销就越大。</p>
+<p>在选择封锁粒度时，需要在锁开销和并发程度之间做一个权衡。（并发度更高可能让锁开销更大）</p>
+<h3 id="封锁类型"><a href="#封锁类型" class="headerlink" title="封锁类型"></a>封锁类型</h3><h4 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h4><ul>
+<li>排它锁（Exclusive），简写为 X 锁，又称写锁。</li>
+<li>共享锁（Shared），简写为 S 锁，又称读锁。</li>
+</ul>
+<p>有以下两个规定：</p>
+<ul>
+<li>一个事务对数据对象 A 加了 X 锁，就可以对 A 进行读取和更新。加锁期间其它事务不能对 A 加任何锁。</li>
+<li>一个事务对数据对象 A 加了 S 锁，可以对 A 进行读取操作，但是不能进行更新操作。加锁期间其它事务能对 A 加 S 锁，但是不能加 X 锁。</li>
+</ul>
+<p><img src="/2019/08/10/数据库原理/%E8%AF%BB%E5%86%99%E9%94%81%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7.png" alt></p>
+<p>总结：无论写的操作是前还是后，必定是排它的。</p>
+<h4 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h4><p>使用意向锁（Intention Locks）可以更容易地支持多粒度封锁。</p>
+<p>在存在行级锁和表级锁的情况下，事务 T 想要对表 A 加 X 锁，就需要先检测是否有其它事务对表 A 或者表 A 中的任意一行加了锁，那么就需要对表 A 的每一行都检测一次，这是非常耗时的。</p>
+<p>意向锁在原来的 X/S 锁之上引入了 IX/IS，IX/IS 都是表锁，用来表示一个事务想要在表中的某个数据行上加 X 锁或 S 锁。有以下两个规定：</p>
+<ul>
+<li>一个事务在获得某个数据行对象的 S 锁之前，必须先获得表的 IS 锁或者更强的锁；</li>
+<li>一个事务在获得某个数据行对象的 X 锁之前，必须先获得表的 IX 锁。</li>
+</ul>
+<p>通过引入意向锁，事务 T 想要对表 A 加 X 锁，只需要先检测是否有其它事务对表 A 加了 X/IX/S/IS 锁，如果加了就表示有其它事务正在使用这个表或者表中某一行的锁，因此事务 T 加 X 锁失败。</p>
+<p>各种锁的兼容关系如下：</p>
+<p><img src="/2019/08/10/数据库原理/%E6%84%8F%E5%90%91%E9%94%81%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7.png" alt></p>
+<p>解释如下：</p>
+<ul>
+<li>任意 IS/IX 锁之间都是兼容的，因为它们只是表示想要对表加锁，而不是真正加锁；</li>
+<li>S 锁只与 S 锁和 IS 锁兼容，也就是说事务 T 想要对数据行加 S 锁，其它事务可以已经获得对表或者表中的行的 S 锁。</li>
+</ul>
+<h4 id="理解意向锁作用"><a href="#理解意向锁作用" class="headerlink" title="理解意向锁作用"></a>理解意向锁作用</h4><p>情况模拟：（只使用读写锁的情况）</p>
+<p>有事务A和事务B，一张资源表table，table未被加任何锁，A想进行读操作，B想进行写操作</p>
+<p>步骤：</p>
+<ul>
+<li><p>A 先检查表table是否被加上了锁，如S，X</p>
+</li>
+<li><p>A在自己要写的行的加上行锁</p>
+</li>
+<li><p>A事务进行</p>
+</li>
+<li><p>B检查表table是否被加上了锁，如S，X</p>
+</li>
+<li><p>表table未被加任何锁</p>
+</li>
+<li><p><strong>B继续检查表中每行是否被加了行锁（这一步非常耗时）</strong></p>
+</li>
+<li><p>B检查到表table的某一行加了X锁，B事务被阻塞，进入等待</p>
+</li>
+<li><p>A事务完成</p>
+</li>
+<li><p>B在自己要读的行的加上行锁</p>
+</li>
+<li><p>B事务进行</p>
+</li>
+<li><p>B事务完成</p>
+</li>
+</ul>
+<p>情况模拟：（在使用了意向锁的情况）</p>
+<p>有事务A和事务B，一张资源表table，table未被加任何锁，A想进行读操作，B想进行写操作</p>
+<p>步骤：</p>
+<ul>
+<li><p>A 先检查表table是否被加上了锁，如S，X，IX，IS</p>
+</li>
+<li><p>A对表table上一个写意向锁IX</p>
+</li>
+<li><p>A在自己要写的行的加上行锁</p>
+</li>
+<li><p>A事务进行</p>
+</li>
+<li><p>B检查表table是否被加上了锁，如S，X，IX，IS</p>
+</li>
+<li><p><strong>B检查到表able被加上了IX锁，B事务被阻塞，进入等待（不用遍历表）</strong> </p>
+</li>
+<li><p>A事务完成</p>
+</li>
+<li><p>B对表table上一个读意向锁IS</p>
+</li>
+<li><p>B在自己要读的行的加上行锁</p>
+</li>
+<li><p>B事务进行</p>
+</li>
+<li><p>B事务完成</p>
+</li>
+</ul>
+<p>总结：使用行级锁能提高并发度，再加入意向锁机制能提升性能</p>
+<h3 id="封锁协议"><a href="#封锁协议" class="headerlink" title="封锁协议"></a>封锁协议</h3><h4 id="三级封锁协议"><a href="#三级封锁协议" class="headerlink" title="三级封锁协议"></a>三级封锁协议</h4><p><strong>一级封锁协议</strong></p>
+<p>事务 T 要修改数据 A 时必须加 X 锁，直到 T 结束才释放锁。</p>
+<p>可以解决丢失修改问题，因为不能同时有两个事务对同一个数据进行修改，那么事务的修改就不会被覆盖。</p>
+<p><img src="/2019/08/10/数据库原理/%E4%B8%80%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE.png" alt></p>
+<p><strong>二级封锁协议</strong></p>
+<p>在一级的基础上，要求读取数据 A 时必须加 S 锁，读取完马上释放 S 锁。</p>
+<p>可以解决读脏数据问题，因为如果一个事务在对数据 A 进行修改，根据 1 级封锁协议，会加 X 锁，那么就不能再加 S 锁了，也就是不会读入数据。</p>
+<p><img src="/2019/08/10/数据库原理/%E4%BA%8C%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE.png" alt></p>
+<p><strong>三级封锁协议</strong></p>
+<p>在二级的基础上，要求读取数据 A 时必须加 S 锁，直到事务结束了才能释放 S 锁。</p>
+<p>可以解决不可重复读的问题，因为读 A 时，其它事务不能对 A 加 X 锁，从而避免了在读的期间数据发生改变。</p>
+<p><img src="/2019/08/10/数据库原理/%E4%B8%89%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE.png" alt></p>
+<h4 id="两段锁协议"><a href="#两段锁协议" class="headerlink" title="两段锁协议"></a>两段锁协议</h4><p>加锁和解锁分为两个阶段进行。</p>
+<p>两段锁协议（TwoPhase Locking，简称2PL）</p>
+<p>① 在对任何数据进行读、写操作之前，首先要申请并获得对该数据的封锁。</p>
+<p>② <strong>在释放一个封锁之后，事务不再申请和获得其它任何封锁。</strong></p>
+<p>即事务的执行分为两个阶段：</p>
+<p>第一阶段是获得封锁的阶段，称为扩展阶段。</p>
+<p>第二阶段是释放封锁的阶段，称为收缩阶段。</p>
+<p>可以证明，若并发执行的所有事务均遵守两段锁协议，则对这些事务的任何并发调度策略都是可串行化的。</p>
+<p>可串行化调度是指，通过并发控制，使得并发执行的事务结果与某个串行执行的事务结果相同。</p>
+<p>事务遵循两段锁协议是保证可串行化调度的充分条件。例如以下操作满足两段锁协议，它是可串行化调度。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock-x(A)...lock-s(B)...lock-s(C)...unlock(A)...unlock(C)...unlock(B)</span><br></pre></td></tr></table></figure>
+
+<p>但不是必要条件，例如以下操作不满足两段锁协议，但是它还是可串行化调度。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock-x(A)...unlock(A)...lock-s(B)...unlock(B)...lock-s(C)...unlock(C)</span><br></pre></td></tr></table></figure>
+
+<p>另外要注意两段锁协议和防止死锁的一次封锁法的异同之处。一次封锁法要求每个事务必须一次将所有要使用的数据全部加锁，否则就不能继续执行，因此一次封锁法遵守两段锁协议；但是两段锁协议并不要求事务必须一次将所有要使用的数据全部加锁，因此遵守两段锁协议的事务可能发生死锁。</p>
+<p>例如：</p>
+<p>有满足两段锁协议的事务T1和事务T2，资源A，B，C</p>
+<p>T1的执行过程为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock-x(A)...lock-s(B)...lock-s(C)...unlock(A)...unlock(C)...unlock(B)</span><br></pre></td></tr></table></figure>
+
+<p>T2的执行过程为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock-x(B)...lock-s(A)...lock-s(C)...unlock(A)...unlock(C)...unlock(B)</span><br></pre></td></tr></table></figure>
+
+<p>若事务T1和事务T2交替进行，则可能出现事务T1在请求资源B时，由于B被事务T2占用，则T1进入等待，而此时事务T2请求资源A，资源A被事务T1占用，事务T2进入等待，这样就造成了死锁</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">T1：lock-x(A)...lock-s(B)...........无限等待............lock-s(C)</span><br><span class="line">T2：lock-x(B)...lock-s(A)...........无限等待............lock-s(C)</span><br></pre></td></tr></table></figure>
+
+<p>词条：一次封锁法，要求每个事务必须一次将所有要使用的数据全部加锁，否则就不能继续执行。</p>
+<h3 id="MySQL隐式与显式锁定"><a href="#MySQL隐式与显式锁定" class="headerlink" title="MySQL隐式与显式锁定"></a>MySQL隐式与显式锁定</h3><p>MySQL 的 InnoDB 存储引擎采用两段锁协议，会根据隔离级别在需要的时候自动加锁，并且所有的锁都是在同一时刻被释放，这被称为隐式锁定。</p>
+<p>InnoDB 也可以使用特定的语句进行显示锁定：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ... <span class="keyword">LOCK</span> <span class="keyword">In</span> <span class="keyword">SHARE</span> <span class="keyword">MODE</span>;</span><br><span class="line"><span class="keyword">SELECT</span> ... <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多版本并发控制"><a href="#多版本并发控制" class="headerlink" title="多版本并发控制"></a>多版本并发控制</h2><p>多版本并发控制（Multi-Version Concurrency Control, MVCC）是 MySQL 的 InnoDB 存储引擎实现隔离级别的一种具体方式，用于实现提交读和可重复读这两种隔离级别。而未提交读隔离级别总是读取最新的数据行，无需使用 MVCC。可串行化隔离级别需要对所有读取的行都加锁，单纯使用 MVCC 无法实现。</p>
+<p>参考资料</p>
+<p><a href="https://blog.csdn.net/dreamvyps/article/details/84500543" target="_blank" rel="noopener">意向锁的作用</a></p>
+<p><a href="https://blog.csdn.net/ben1010101010/article/details/84573100" target="_blank" rel="noopener">封锁协议与两段锁协议</a></p>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+	</div>
+	
+    <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/数据库原理/" rel="tag"><i class="fa fa-tag"></i> 数据库原理</a>
+          
+        </div>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2019/08/09/MySQL学习笔记/" rel="next" title="MySQL学习笔记">
+                <i class="fa fa-chevron-left"></i> MySQL学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+              <a href="/2019/08/10/Java-I-O/" rel="prev" title="Java I/O">
+                Java I/O <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/head_icon.jpg"
+      alt="weilongChen">
+  <p class="site-author-name" itemprop="name">weilongChen</p>
+  <div class="site-description motion-element" itemprop="description">code maker</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">1.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACID"><span class="nav-number">1.1.</span> <span class="nav-text">ACID</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性（Atomicity）"><span class="nav-number">1.1.1.</span> <span class="nav-text">原子性（Atomicity）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性（Consistency）"><span class="nav-number">1.1.2.</span> <span class="nav-text">一致性（Consistency）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性（Isolation）"><span class="nav-number">1.1.3.</span> <span class="nav-text">隔离性（Isolation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性（Durability）"><span class="nav-number">1.1.4.</span> <span class="nav-text">持久性（Durability）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AutoCommited"><span class="nav-number">1.2.</span> <span class="nav-text">AutoCommited</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解ACID"><span class="nav-number">1.3.</span> <span class="nav-text">理解ACID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发一致性问题"><span class="nav-number">2.</span> <span class="nav-text">并发一致性问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#丢失修改"><span class="nav-number">2.1.</span> <span class="nav-text">丢失修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读脏数据"><span class="nav-number">2.2.</span> <span class="nav-text">读脏数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可重复读"><span class="nav-number">2.3.</span> <span class="nav-text">不可重复读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#幻影读"><span class="nav-number">2.4.</span> <span class="nav-text">幻影读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">2.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隔离级别"><span class="nav-number">3.</span> <span class="nav-text">隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#read-uncommitted（未提交读）"><span class="nav-number">3.1.</span> <span class="nav-text">read uncommitted（未提交读）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read-committed-提交读"><span class="nav-number">3.2.</span> <span class="nav-text">read committed(提交读)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#repeatable-read（可重复读）"><span class="nav-number">3.3.</span> <span class="nav-text">repeatable read（可重复读）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#seializable（可串行化）"><span class="nav-number">3.4.</span> <span class="nav-text">seializable（可串行化）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封锁机制"><span class="nav-number">4.</span> <span class="nav-text">封锁机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#封锁粒度"><span class="nav-number">4.1.</span> <span class="nav-text">封锁粒度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封锁类型"><span class="nav-number">4.2.</span> <span class="nav-text">封锁类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写锁"><span class="nav-number">4.2.1.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#意向锁"><span class="nav-number">4.2.2.</span> <span class="nav-text">意向锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#理解意向锁作用"><span class="nav-number">4.2.3.</span> <span class="nav-text">理解意向锁作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封锁协议"><span class="nav-number">4.3.</span> <span class="nav-text">封锁协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三级封锁协议"><span class="nav-number">4.3.1.</span> <span class="nav-text">三级封锁协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两段锁协议"><span class="nav-number">4.3.2.</span> <span class="nav-text">两段锁协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL隐式与显式锁定"><span class="nav-number">4.4.</span> <span class="nav-text">MySQL隐式与显式锁定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多版本并发控制"><span class="nav-number">5.</span> <span class="nav-text">多版本并发控制</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-envelope"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">weilongChen</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/affix.js?v=7.3.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
