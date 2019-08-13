@@ -76,7 +76,15 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%B8%80%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%BA%8C%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%B8%89%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE.png">
-<meta property="og:updated_time" content="2019-08-10T11:26:16.307Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E5%BF%AB%E7%85%A7%E5%9B%9E%E6%BB%9A.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%B8%8D%E7%AC%A6%E5%90%88%E8%8C%83%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/%E4%B8%8D%E7%AC%A6%E5%90%88%E8%8C%83%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/2NF%E5%88%86%E8%A7%A3%E5%90%8E1.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/2NF%E5%88%86%E8%A7%A3%E5%90%8E2.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/3NF%E5%88%86%E8%A7%A3%E5%90%8E1.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/3NF%E5%88%86%E8%A7%A3%E5%90%8E2.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/数据库原理/ER%E5%9B%BE%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:updated_time" content="2019-08-11T14:05:18.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库原理">
 <meta name="twitter:description" content="数据库的设计理论，事务，隔离级别，锁机制">
@@ -295,11 +303,19 @@
                 
               
 
-              <time title="创建时间：2019-08-10 10:49:41 / 修改时间：19:26:16" itemprop="dateCreated datePublished" datetime="2019-08-10T10:49:41+08:00">2019-08-10</time>
+              <time title="创建时间：2019-08-10 10:49:41" itemprop="dateCreated datePublished" datetime="2019-08-10T10:49:41+08:00">2019-08-10</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-11 22:05:18" itemprop="dateModified" datetime="2019-08-11T22:05:18+08:00">2019-08-11</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -504,9 +520,120 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ... <span class="keyword">LOCK</span> <span class="keyword">In</span> <span class="keyword">SHARE</span> <span class="keyword">MODE</span>;</span><br><span class="line"><span class="keyword">SELECT</span> ... <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</span><br></pre></td></tr></table></figure>
 
 <h2 id="多版本并发控制"><a href="#多版本并发控制" class="headerlink" title="多版本并发控制"></a>多版本并发控制</h2><p>多版本并发控制（Multi-Version Concurrency Control, MVCC）是 MySQL 的 InnoDB 存储引擎实现隔离级别的一种具体方式，用于实现提交读和可重复读这两种隔离级别。而未提交读隔离级别总是读取最新的数据行，无需使用 MVCC。可串行化隔离级别需要对所有读取的行都加锁，单纯使用 MVCC 无法实现。</p>
+<h3 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h3><ul>
+<li>系统版本号：是一个递增的数字，每开始一个新的事务，系统版本号就会自动递增。</li>
+<li>事务版本号：事务开始时的系统版本号。</li>
+</ul>
+<h3 id="隐藏的列"><a href="#隐藏的列" class="headerlink" title="隐藏的列"></a>隐藏的列</h3><ul>
+<li>创建版本号：指示创建一个数据行的快照时的系统版本号；</li>
+<li>删除版本号：如果该快照的删除版本号大于当前事务版本号表示该快照有效，否则表示该快照已经被删除了。</li>
+</ul>
+<h3 id="undo日志"><a href="#undo日志" class="headerlink" title="undo日志"></a>undo日志</h3><p>MVCC 使用到的快照存储在 Undo 日志中，该日志通过回滚指针把一个数据行（Record）的所有快照连接起来。</p>
+<p><img src="/2019/08/10/数据库原理/%E5%BF%AB%E7%85%A7%E5%9B%9E%E6%BB%9A.png" alt></p>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><p>MySQL的默认隔离级别是不可重复读，以下实现过程针对不可重复读隔离级别。</p>
+<p>当开始一个事务时，该事务的版本号肯定大于当前所有数据行快照的创建版本号，理解这一点很关键。数据行快照的创建版本号是创建数据行快照时的系统版本号，系统版本号随着创建事务而递增，因此新创建一个事务时，这个事务的系统版本号比之前的系统版本号都大，也就是比所有数据行快照的创建版本号都大。</p>
+<p><strong>1.SELECT</strong></p>
+<p>多个事务必须读取到同一个数据行的快照，并且这个快照是距离现在最近的一个有效快照。但是也有例外，如果有一个事务正在修改该数据行，那么它可以读取事务本身所做的修改，而不用和其它事务的读取结果一致。</p>
+<p>把没有对一个数据行做修改的事务称为 T，T 所要读取的数据行快照的创建版本号必须小于等于 T 的版本号，因为如果大于 T 的版本号，那么表示该数据行快照是其它事务的最新修改，因此不能去读取它。除此之外，T 所要读取的数据行快照的删除版本号必须是未定义或者大于 T 的版本号，因为如果小于等于 T 的版本号，那么表示该数据行快照是已经被删除的，不应该去读取它。</p>
+<p><strong>2.INSERT</strong></p>
+<p>将当前系统版本号作为数据行快照的创建版本号。</p>
+<p><strong>3.DELETE</strong></p>
+<p>将当前系统版本号作为数据行快照的删除版本号。</p>
+<p><strong>4.UPDATE</strong></p>
+<p>将当前系统版本号作为更新前的数据行快照的删除版本号，并将当前系统版本号作为更新后的数据行快照的创建版本号。可以理解为先执行 DELETE 后执行 INSERT。</p>
+<h3 id="快照读与当前读"><a href="#快照读与当前读" class="headerlink" title="快照读与当前读"></a>快照读与当前读</h3><h4 id="快照读"><a href="#快照读" class="headerlink" title="快照读"></a>快照读</h4><p>使用 MVCC 读取的是快照中的数据，这样可以减少加锁所带来的开销。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> ...;</span><br></pre></td></tr></table></figure>
+
+<h4 id="当前读"><a href="#当前读" class="headerlink" title="当前读"></a>当前读</h4><p>读取的是最新的数据，需要加锁。以下第一个语句需要加 S 锁，其它都需要加 X 锁。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> ? <span class="keyword">lock</span> <span class="keyword">in</span> <span class="keyword">share</span> <span class="keyword">mode</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> ? <span class="keyword">for</span> <span class="keyword">update</span>;</span><br><span class="line"><span class="keyword">insert</span>;</span><br><span class="line"><span class="keyword">update</span>;</span><br><span class="line"><span class="keyword">delete</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Next-Key-Locks"><a href="#Next-Key-Locks" class="headerlink" title="Next-Key Locks"></a>Next-Key Locks</h2><p>Next-Key Locks 是 MySQL 的 InnoDB 存储引擎的一种锁实现。</p>
+<p>MVCC 不能解决幻影读问题，Next-Key Locks 就是为了解决这个问题而存在的。在可重复读（REPEATABLE READ）隔离级别下，使用 MVCC + Next-Key Locks 可以解决幻读问题。</p>
+<h3 id="Record-Locks"><a href="#Record-Locks" class="headerlink" title="Record Locks"></a>Record Locks</h3><p>Next-Key Locks 是 MySQL 的 InnoDB 存储引擎的一种锁实现。</p>
+<p>MVCC 不能解决幻影读问题，Next-Key Locks 就是为了解决这个问题而存在的。在可重复读（REPEATABLE READ）隔离级别下，使用 MVCC + Next-Key Locks 可以解决幻读问题。</p>
+<h3 id="Gap-Locks"><a href="#Gap-Locks" class="headerlink" title="Gap Locks"></a>Gap Locks</h3><p>锁定索引之间的间隙，但是不包含索引本身。例如当一个事务执行以下语句，其它事务就不能在 t.c 中插入 15。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c <span class="keyword">FROM</span> t <span class="keyword">WHERE</span> c <span class="keyword">BETWEEN</span> <span class="number">10</span> <span class="keyword">and</span> <span class="number">20</span> <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Next-Key-Locks-1"><a href="#Next-Key-Locks-1" class="headerlink" title="Next-Key Locks"></a>Next-Key Locks</h3><p>它是 Record Locks 和 Gap Locks 的结合，不仅锁定一个记录上的索引，也锁定索引之间的间隙。例如一个索引包含以下值：10, 11, 13, and 20，那么就需要锁定以下区间：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(-∞, 10]</span><br><span class="line">(10, 11]</span><br><span class="line">(11, 13]</span><br><span class="line">(13, 20]</span><br><span class="line">(20, +∞)</span><br></pre></td></tr></table></figure>
+
+<h3 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h3><p>当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙（GAP)”，InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁（Next-Key锁）。</p>
+<p>举例来说，假如emp表中只有101条记录，其empid的值分别是 1,2,…,100,101，下面的SQL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> * <span class="keyword">from</span>  emp <span class="keyword">where</span> empid &gt; <span class="number">100</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br></pre></td></tr></table></figure>
+
+<p>是一个范围条件的检索，InnoDB不仅会对符合条件的empid值为101的记录加锁，也会对empid大于101（这些记录并不存在）的“间隙”加锁。</p>
+<p>InnoDB使用间隙锁的目的，一方面是为了防止幻读，以满足相关隔离级别的要求，对于上面的例子，要是不使用间隙锁，如果其他事务插入了empid大于100的任何记录，那么本事务如果再次执行上述语句，就会发生幻读。</p>
+<p>很显然，在使用范围条件检索并锁定记录时，InnoDB这种加锁机制会阻塞符合条件范围内键值的并发插入，这往往会造成严重的锁等待。因此，在实际应用开发中，尤其是并发插入比较多的应用，我们要尽量优化业务逻辑，尽量使用相等条件来访问更新数据，避免使用范围条件。</p>
+<h2 id="关系型数据库设计理论"><a href="#关系型数据库设计理论" class="headerlink" title="关系型数据库设计理论"></a>关系型数据库设计理论</h2><h3 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h3><p>记 A-&gt;B 表示 A 函数决定 B，也可以说 B 函数依赖于 A。</p>
+<p>如果 {A1，A2，… ，An} 是关系的一个或多个属性的集合，该集合函数决定了关系的其它所有属性并且是最小的，那么该集合就称为键码。</p>
+<p>对于 A-&gt;B，如果能找到 A 的真子集 A’，使得 A’-&gt; B，那么 A-&gt;B 就是部分函数依赖，否则就是完全函数依赖。</p>
+<p>对于 A-&gt;B，B-&gt;C，则 A-&gt;C 是一个传递函数依赖。</p>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>以下的学生课程关系的函数依赖为 {Sno, Cname} -&gt; {Sname, Sdept, Mname, Grade}，键码为 {Sno, Cname}。也就是说，确定学生和课程之后，就能确定其它信息。</p>
+<p><img src="/2019/08/10/数据库原理/%E4%B8%8D%E7%AC%A6%E5%90%88%E8%8C%83%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt></p>
+<p>不符合范式的关系，会产生很多异常，主要有以下四种异常：</p>
+<ul>
+<li>冗余数据：例如 <code>学生-2</code> 出现了两次。</li>
+<li>修改异常：修改了一个记录中的信息，但是另一个记录中相同的信息却没有被修改。</li>
+<li>删除异常：删除一个信息，那么也会丢失其它信息。例如删除了 <code>课程-1</code> 需要删除第一行和第三行，那么 <code>学生-1</code> 的信息就会丢失。</li>
+<li>插入异常：例如想要插入一个学生的信息，如果这个学生还没选课，那么就无法插入。</li>
+</ul>
+<h3 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h3><p>范式理论是为了解决以上提到四种异常。</p>
+<p>高级别范式的依赖于低级别的范式，1NF 是最低级别的范式。</p>
+<h4 id="第一范式（1NF）"><a href="#第一范式（1NF）" class="headerlink" title="第一范式（1NF）"></a>第一范式（1NF）</h4><p>属性不可再分</p>
+<h4 id="第二范式（2NF）"><a href="#第二范式（2NF）" class="headerlink" title="第二范式（2NF）"></a>第二范式（2NF）</h4><p>在1NF的基础上，</p>
+<p>每个非主属性完全函数依赖于键码。</p>
+<p>可以通过分解来满足。</p>
+<p><strong>分解前</strong>：</p>
+<p><img src="/2019/08/10/数据库原理/%E4%B8%8D%E7%AC%A6%E5%90%88%E8%8C%83%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt></p>
+<p>以上学生课程关系中，{Sno, Cname} 为键码，有如下函数依赖：</p>
+<ul>
+<li>Sno -&gt; Sname, Sdept</li>
+<li>Sdept -&gt; Mname</li>
+<li>Sno, Cname-&gt; Grade</li>
+</ul>
+<p>Grade 完全函数依赖于键码，它没有任何冗余数据，每个学生的每门课都有特定的成绩。</p>
+<p>Sname, Sdept 和 Mname 都部分依赖于键码，当一个学生选修了多门课时，这些数据就会出现多次，造成大量冗余数据。</p>
+<p><strong>分解后</strong>：</p>
+<p>关系-1</p>
+<p><img src="/2019/08/10/数据库原理/2NF%E5%88%86%E8%A7%A3%E5%90%8E1.png" alt></p>
+<p>有以下函数依赖（消除了部分函数依赖，但存在传递依赖）：</p>
+<ul>
+<li>Sno -&gt; Sname, Sdept</li>
+<li>Sdept -&gt; Mname</li>
+</ul>
+<p>关系-2</p>
+<p><img src="/2019/08/10/数据库原理/2NF%E5%88%86%E8%A7%A3%E5%90%8E2.png" alt></p>
+<p>有以下函数依赖：</p>
+<ul>
+<li>Sno, Cname -&gt; Grade</li>
+</ul>
+<h4 id="第三范式（3NF）"><a href="#第三范式（3NF）" class="headerlink" title="第三范式（3NF）"></a>第三范式（3NF）</h4><p>在2NF的基础上</p>
+<p>非主属性不传递函数依赖于键码。</p>
+<p>上面的 关系-1 中存在以下传递函数依赖：</p>
+<ul>
+<li>Sno -&gt; Sdept -&gt; Mname</li>
+</ul>
+<p>可以进行以下分解：</p>
+<p>关系-1</p>
+<p><img src="/2019/08/10/数据库原理/3NF%E5%88%86%E8%A7%A3%E5%90%8E1.PNG" alt></p>
+<p>关系-2</p>
+<p><img src="/2019/08/10/数据库原理/3NF%E5%88%86%E8%A7%A3%E5%90%8E2.PNG" alt></p>
+<h2 id="ER图"><a href="#ER图" class="headerlink" title="ER图"></a>ER图</h2><h3 id="构成"><a href="#构成" class="headerlink" title="构成"></a>构成</h3><p>Entity-Relationship，有三个组成部分：实体、属性、联系。</p>
+<p>用来进行关系型数据库系统的概念设计。</p>
+<p>用“<strong>矩形框</strong>”表示实体型，矩形框内写明实体名称；<br>用“<strong>椭圆框</strong>”表示实体的属性，将属性名记入框中；<br>用”<strong>菱形框</strong>“表示实体型之间的关系，在菱形框内写明关系名。<br>用”<strong>实心连线</strong>“表示：实体与属性之间；实体与联系之间；联系与属性之间用直线相连，并在直线上标注联系的类型。</p>
+<h3 id="实体的联系"><a href="#实体的联系" class="headerlink" title="实体的联系"></a>实体的联系</h3><p><strong>一对一联系</strong>(1 ∶1)<br>对于两个实体集A和B，若A中的每一个值在B中至多有一个实体值与之对应，反之亦然，则称实体集A和B具有一对一的联系。<br>例如：一个学校只有一个校长，而一个校长只在一个学校中任职，则学校与校长之间具有一对一联系。</p>
+<p><strong>一对多联系</strong>(1 ∶N)<br>对于两个实体集A和B，若A中的每一个值在B中有多个实体值与之对应，反之B中每一个实体值在A中至多有一个实体值与之对应，则称实体集A和B具有一对多的联系。<br>例如：一个学校的教师与课程之间存在一对多的联系“授课”，即每位教师可以教多门课程，但是每门课程只能由一位教师来教，则课程与课程之间具有一对多联系。</p>
+<p><strong>多对多联系</strong>(M ∶N)<br>对于两个实体集A和B，若A中每一个实体值在B中有多个实体值与之对应，反之亦然，则称实体集A与实体集B具有多对多联系。</p>
+<p>例如：一个学生可以学多门课程，而每门课程可以有多个学生来学习，则学生与课程间的联系“选修 ”是多对多的。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>题目：一个学生可选修多门课，一门课有若干学生选修；<br>一个教师可讲授多门课，一门课只有一个教师讲授；<br>一个学生选修一门课，仅有一个成绩。<br>学生的属性有学号、学生姓名；教师的属性有教师编号，教师姓名；课程的属性有课程号、课程名。</p>
+<p>ER图如下</p>
+<p><img src="/2019/08/10/数据库原理/ER%E5%9B%BE%E5%AE%9E%E4%BE%8B.png" alt></p>
 <p>参考资料</p>
 <p><a href="https://blog.csdn.net/dreamvyps/article/details/84500543" target="_blank" rel="noopener">意向锁的作用</a></p>
 <p><a href="https://blog.csdn.net/ben1010101010/article/details/84573100" target="_blank" rel="noopener">封锁协议与两段锁协议</a></p>
+<p><a href="https://blog.csdn.net/mysteryhaohao/article/details/51669741" target="_blank" rel="noopener">MySQL学习之——锁(行锁、表锁、页锁、乐观锁、悲观锁等)</a></p>
+<p><a href="https://blog.csdn.net/weixin_43287508/article/details/87258128" target="_blank" rel="noopener">ER图（实体-联系图）</a></p>
+<p><a href="https://cyc2018.github.io/CS-Notes/#/notes/数据库系统原理" target="_blank" rel="noopener">数据库系统原理</a></p>
 
     </div>
 
@@ -600,7 +727,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -625,7 +752,9 @@
         
           
         
-        <span class="site-state-item-count">5</span>
+          
+        
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -660,7 +789,9 @@
         
           
         
-        <span class="site-state-item-count">10</span>
+          
+        
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -681,7 +812,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">1.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACID"><span class="nav-number">1.1.</span> <span class="nav-text">ACID</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性（Atomicity）"><span class="nav-number">1.1.1.</span> <span class="nav-text">原子性（Atomicity）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性（Consistency）"><span class="nav-number">1.1.2.</span> <span class="nav-text">一致性（Consistency）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性（Isolation）"><span class="nav-number">1.1.3.</span> <span class="nav-text">隔离性（Isolation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性（Durability）"><span class="nav-number">1.1.4.</span> <span class="nav-text">持久性（Durability）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AutoCommited"><span class="nav-number">1.2.</span> <span class="nav-text">AutoCommited</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解ACID"><span class="nav-number">1.3.</span> <span class="nav-text">理解ACID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发一致性问题"><span class="nav-number">2.</span> <span class="nav-text">并发一致性问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#丢失修改"><span class="nav-number">2.1.</span> <span class="nav-text">丢失修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读脏数据"><span class="nav-number">2.2.</span> <span class="nav-text">读脏数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可重复读"><span class="nav-number">2.3.</span> <span class="nav-text">不可重复读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#幻影读"><span class="nav-number">2.4.</span> <span class="nav-text">幻影读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">2.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隔离级别"><span class="nav-number">3.</span> <span class="nav-text">隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#read-uncommitted（未提交读）"><span class="nav-number">3.1.</span> <span class="nav-text">read uncommitted（未提交读）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read-committed-提交读"><span class="nav-number">3.2.</span> <span class="nav-text">read committed(提交读)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#repeatable-read（可重复读）"><span class="nav-number">3.3.</span> <span class="nav-text">repeatable read（可重复读）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#seializable（可串行化）"><span class="nav-number">3.4.</span> <span class="nav-text">seializable（可串行化）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封锁机制"><span class="nav-number">4.</span> <span class="nav-text">封锁机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#封锁粒度"><span class="nav-number">4.1.</span> <span class="nav-text">封锁粒度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封锁类型"><span class="nav-number">4.2.</span> <span class="nav-text">封锁类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写锁"><span class="nav-number">4.2.1.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#意向锁"><span class="nav-number">4.2.2.</span> <span class="nav-text">意向锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#理解意向锁作用"><span class="nav-number">4.2.3.</span> <span class="nav-text">理解意向锁作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封锁协议"><span class="nav-number">4.3.</span> <span class="nav-text">封锁协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三级封锁协议"><span class="nav-number">4.3.1.</span> <span class="nav-text">三级封锁协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两段锁协议"><span class="nav-number">4.3.2.</span> <span class="nav-text">两段锁协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL隐式与显式锁定"><span class="nav-number">4.4.</span> <span class="nav-text">MySQL隐式与显式锁定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多版本并发控制"><span class="nav-number">5.</span> <span class="nav-text">多版本并发控制</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">1.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACID"><span class="nav-number">1.1.</span> <span class="nav-text">ACID</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性（Atomicity）"><span class="nav-number">1.1.1.</span> <span class="nav-text">原子性（Atomicity）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性（Consistency）"><span class="nav-number">1.1.2.</span> <span class="nav-text">一致性（Consistency）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性（Isolation）"><span class="nav-number">1.1.3.</span> <span class="nav-text">隔离性（Isolation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性（Durability）"><span class="nav-number">1.1.4.</span> <span class="nav-text">持久性（Durability）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AutoCommited"><span class="nav-number">1.2.</span> <span class="nav-text">AutoCommited</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解ACID"><span class="nav-number">1.3.</span> <span class="nav-text">理解ACID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发一致性问题"><span class="nav-number">2.</span> <span class="nav-text">并发一致性问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#丢失修改"><span class="nav-number">2.1.</span> <span class="nav-text">丢失修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读脏数据"><span class="nav-number">2.2.</span> <span class="nav-text">读脏数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可重复读"><span class="nav-number">2.3.</span> <span class="nav-text">不可重复读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#幻影读"><span class="nav-number">2.4.</span> <span class="nav-text">幻影读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">2.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隔离级别"><span class="nav-number">3.</span> <span class="nav-text">隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#read-uncommitted（未提交读）"><span class="nav-number">3.1.</span> <span class="nav-text">read uncommitted（未提交读）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read-committed-提交读"><span class="nav-number">3.2.</span> <span class="nav-text">read committed(提交读)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#repeatable-read（可重复读）"><span class="nav-number">3.3.</span> <span class="nav-text">repeatable read（可重复读）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#seializable（可串行化）"><span class="nav-number">3.4.</span> <span class="nav-text">seializable（可串行化）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封锁机制"><span class="nav-number">4.</span> <span class="nav-text">封锁机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#封锁粒度"><span class="nav-number">4.1.</span> <span class="nav-text">封锁粒度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封锁类型"><span class="nav-number">4.2.</span> <span class="nav-text">封锁类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写锁"><span class="nav-number">4.2.1.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#意向锁"><span class="nav-number">4.2.2.</span> <span class="nav-text">意向锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#理解意向锁作用"><span class="nav-number">4.2.3.</span> <span class="nav-text">理解意向锁作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封锁协议"><span class="nav-number">4.3.</span> <span class="nav-text">封锁协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三级封锁协议"><span class="nav-number">4.3.1.</span> <span class="nav-text">三级封锁协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两段锁协议"><span class="nav-number">4.3.2.</span> <span class="nav-text">两段锁协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL隐式与显式锁定"><span class="nav-number">4.4.</span> <span class="nav-text">MySQL隐式与显式锁定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多版本并发控制"><span class="nav-number">5.</span> <span class="nav-text">多版本并发控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#版本号"><span class="nav-number">5.1.</span> <span class="nav-text">版本号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏的列"><span class="nav-number">5.2.</span> <span class="nav-text">隐藏的列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undo日志"><span class="nav-number">5.3.</span> <span class="nav-text">undo日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现过程"><span class="nav-number">5.4.</span> <span class="nav-text">实现过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快照读与当前读"><span class="nav-number">5.5.</span> <span class="nav-text">快照读与当前读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快照读"><span class="nav-number">5.5.1.</span> <span class="nav-text">快照读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#当前读"><span class="nav-number">5.5.2.</span> <span class="nav-text">当前读</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next-Key-Locks"><span class="nav-number">6.</span> <span class="nav-text">Next-Key Locks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Record-Locks"><span class="nav-number">6.1.</span> <span class="nav-text">Record Locks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gap-Locks"><span class="nav-number">6.2.</span> <span class="nav-text">Gap Locks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Next-Key-Locks-1"><span class="nav-number">6.3.</span> <span class="nav-text">Next-Key Locks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解"><span class="nav-number">6.4.</span> <span class="nav-text">理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关系型数据库设计理论"><span class="nav-number">7.</span> <span class="nav-text">关系型数据库设计理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数依赖"><span class="nav-number">7.1.</span> <span class="nav-text">函数依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">7.2.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范式"><span class="nav-number">7.3.</span> <span class="nav-text">范式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一范式（1NF）"><span class="nav-number">7.3.1.</span> <span class="nav-text">第一范式（1NF）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二范式（2NF）"><span class="nav-number">7.3.2.</span> <span class="nav-text">第二范式（2NF）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三范式（3NF）"><span class="nav-number">7.3.3.</span> <span class="nav-text">第三范式（3NF）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ER图"><span class="nav-number">8.</span> <span class="nav-text">ER图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构成"><span class="nav-number">8.1.</span> <span class="nav-text">构成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实体的联系"><span class="nav-number">8.2.</span> <span class="nav-text">实体的联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">8.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></div>
             
 
           </div>
