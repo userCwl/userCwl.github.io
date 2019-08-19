@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="weilongChen">
 <meta property="og:description" content="一些令人思考的问题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-19T06:15:58.261Z">
+<meta property="og:updated_time" content="2019-08-19T06:19:58.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="奇思妙想">
 <meta name="twitter:description" content="一些令人思考的问题">
@@ -282,7 +282,7 @@
                 
               
 
-              <time title="创建时间：2019-08-19 11:21:46 / 修改时间：14:15:58" itemprop="dateCreated datePublished" datetime="2019-08-19T11:21:46+08:00">2019-08-19</time>
+              <time title="创建时间：2019-08-19 11:21:46 / 修改时间：14:19:58" itemprop="dateCreated datePublished" datetime="2019-08-19T11:21:46+08:00">2019-08-19</time>
             </span>
           
             
@@ -358,7 +358,7 @@
 <p>其中对于两个构造方法的输出顺序之前已经提过，而对于子类对象能访问父类中的public成员int变量a，也是合理的。</p>
 <p>但是对于刚开始我们的例子里，父类或者子类中都只有静态变量，静态代码块，以及构造方法。我们也知道他们的初始化顺序，但是在上面这个例子中，父类只有一个普通成员变量，子类也能顺利访问到其值为1，然后代码中并没有将它放进构造方法中，那么到底是什么时候才有“这个值”的呢？</p>
 <p>其实，这里面包含了<strong>类的加载过程</strong>以及<strong>对象的创建过程</strong>。</p>
-<p>那么，如果是第一次使用这个类的话，会先加载类，即是在方法区中给静态变量、常量、常量池等分配内存空间并初始化等操作，在内存中生成一个代表该类的Class对象，作为方法区中该类各种数据的访问入口。（详情可参见笔者另一篇文章<a href>类的加载机制</a>）</p>
+<p>那么，如果是第一次使用这个类的话，会先加载类，即是在方法区中给静态变量、常量、常量池等分配内存空间并初始化等操作，在内存中生成一个代表该类的Class对象，作为方法区中该类各种数据的访问入口。（详情可参见笔者另一篇文章《<a href="https://usercwl.github.io/2019/08/19/类的加载机制/" target="_blank" rel="noopener">类的加载机制</a>》）</p>
 <p>类的加载其实也就是体现在刚开始的例子，其中的静态变量，静态代码块的初始化，也就是仅初始化一次。</p>
 <p>当类加载完毕后，到了创建对象的时候，可以看到是先执行了父类的构造方法，再执行子类的构造方法。</p>
 <p><strong>这里开始令人思考了</strong></p>
@@ -456,7 +456,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
