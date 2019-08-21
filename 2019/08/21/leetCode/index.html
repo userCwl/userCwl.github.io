@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/web_icon.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+  <meta name="description" content="关于LeetCode算法题的学习笔记">
+<meta name="keywords" content="LeetCode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetCode">
+<meta property="og:url" content="http://yoursite.com/2019/08/21/leetCode/index.html">
+<meta property="og:site_name" content="weilongChen">
+<meta property="og:description" content="关于LeetCode算法题的学习笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B1.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B2.png">
+<meta property="og:updated_time" content="2019-08-21T08:49:21.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="leetCode">
+<meta name="twitter:description" content="关于LeetCode算法题的学习笔记">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B1.png">
+  <link rel="canonical" href="http://yoursite.com/2019/08/21/leetCode/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>leetCode | weilongChen</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+	
+	<!-- 自己增加的代码：fork me github -->
+	<a href="https://github.com/userCwl">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" 
+	class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+	
+	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">weilongChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">想学习想得睡不着~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-music">
+      
+    
+
+    <a href="/music/" rel="section"><i class="menu-item-icon fa fa-fw fa-music"></i> <br>音乐</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/21/leetCode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="weilongChen">
+      <meta itemprop="description" content="code maker">
+      <meta itemprop="image" content="/images/head_icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="weilongChen">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">leetCode
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-21 14:59:43 / 修改时间：16:49:21" itemprop="dateCreated datePublished" datetime="2019-08-21T14:59:43+08:00">2019-08-21</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>关于LeetCode算法题的学习笔记</center>
+
+<a id="more"></a>
+
+<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><h3 id="有序数组的Two-Sum"><a href="#有序数组的Two-Sum" class="headerlink" title="有序数组的Two Sum"></a>有序数组的Two Sum</h3><p><a href="https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/" target="_blank" rel="noopener">#167.two-sum-ii-input-array-is-sorted</a></p>
+<p><font color="#ff4500" size="4">题目：给定一个已按照升序排列的有序数组，找到两个数使得它们相加之和等于目标数。函数应该返回这两个下标值 index1 和 index2，其中 index1 必须小于 index2。</font> </p>
+<p>说明：</p>
+<ul>
+<li>返回的下标值（index1 和 index2）不是从零开始的。</li>
+<li>你可以假设每个输入只对应唯一的答案，而且你不可以重复使用相同的元素。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: numbers = [2, 7, 11, 15], target = 9</span><br><span class="line">输出: [1,2]</span><br><span class="line">解释: 2 与 7 之和等于目标数 9 。因此 index1 = 1, index2 = 2 。</span><br></pre></td></tr></table></figure>
+
+<p><font color="#00ffff" size="4">解：</font></p>
+<p>使用双指针，一个指针指向值较小的元素，一个指针指向值较大的元素。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。</p>
+<ul>
+<li>如果两个指针指向元素的和 sum == target，那么得到要求的结果；</li>
+<li>如果 sum &gt; target，移动较大的元素，使 sum 变小一些；</li>
+<li>如果 sum &lt; target，移动较小的元素，使 sum 变大一些。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 双指针</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> j = numbers.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; j)&#123;</span><br><span class="line">            <span class="keyword">int</span> num = numbers[i] + numbers[j];</span><br><span class="line">            <span class="keyword">if</span>(num == target)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;i+<span class="number">1</span>,j+<span class="number">1</span>&#125;;  <span class="comment">//注意题目要求不是从0开始</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(num &lt; target)&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="两数平方和"><a href="#两数平方和" class="headerlink" title="两数平方和"></a>两数平方和</h3><p><a href="https://leetcode-cn.com/problems/sum-of-square-numbers/" target="_blank" rel="noopener">#633.平方数之和</a></p>
+<p><font color="#ff4500" size="4">题目：给定一个非负整数 <code>c</code> ，你要判断是否存在两个整数 <code>a</code> 和 <code>b</code>，使得a&sup2; + b&sup2; = c。</font> </p>
+<p>示例1：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: 5</span><br><span class="line">输出: True</span><br><span class="line">解释: 1 * 1 + 2 * 2 = 5</span><br></pre></td></tr></table></figure>
+
+<p>示例2：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: 3</span><br><span class="line">输出: False</span><br></pre></td></tr></table></figure>
+
+<p><font color="#00ffff" size="4">解：</font></p>
+<p>先确定可能的数的边界，即0~(int) Math.sqrt(c)，使用双指针，一个指针指向值较小的元素，一个指针指向值较大的元素。指向较小元素的指针从头向尾遍历，指向较大元素的指针从尾向头遍历。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 双指针</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">judgeSquareSum</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = (<span class="keyword">int</span>) Math.sqrt(c);</span><br><span class="line">        <span class="keyword">while</span>(i &lt;= j)&#123;  <span class="comment">// 可以一个数的平方的相加，例如2*2+2*2=8，所以 i&lt;= j</span></span><br><span class="line">            <span class="keyword">int</span> num = i * i + j * j;</span><br><span class="line">            <span class="keyword">if</span>(num == c)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>( num &lt; c)&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="反转字符串中的元音字母"><a href="#反转字符串中的元音字母" class="headerlink" title="反转字符串中的元音字母"></a>反转字符串中的元音字母</h3><p><a href="https://leetcode-cn.com/problems/reverse-vowels-of-a-string/" target="_blank" rel="noopener">#345.反转字符串中的元音字母</a></p>
+<p><font color="#ff4500" size="4">题目：编写一个函数，以字符串作为输入，反转该字符串中的元音字母。</font> </p>
+<p>示例1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;hello&quot;</span><br><span class="line">输出: &quot;holle&quot;</span><br></pre></td></tr></table></figure>
+
+<p>示例2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;leetcode&quot;</span><br><span class="line">输出: &quot;leotcede&quot;</span><br></pre></td></tr></table></figure>
+
+<p><font color="#00ffff" size="4">解：</font></p>
+<p>先从前面找到第一个元音字母， 然后从后面找第一个元音字母，二者互换位置，开启下一轮。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 用HashSet存元音字符集合</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> HashSet&lt;Character&gt; chars = <span class="keyword">new</span> HashSet&lt;&gt;(</span><br><span class="line">    Arrays.asList(<span class="string">'a'</span>,<span class="string">'e'</span>,<span class="string">'i'</span>,<span class="string">'o'</span>,<span class="string">'u'</span>,<span class="string">'A'</span>,<span class="string">'E'</span>,<span class="string">'I'</span>,<span class="string">'O'</span>,<span class="string">'U'</span>));</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">reverseVowels</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = s.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">char</span>[] result = <span class="keyword">new</span> <span class="keyword">char</span>[s.length()];</span><br><span class="line">        <span class="keyword">while</span>(i &lt;= j)&#123;</span><br><span class="line">            <span class="keyword">char</span> ci = s.charAt(i);</span><br><span class="line">            <span class="keyword">char</span> cj = s.charAt(j);</span><br><span class="line">            <span class="keyword">if</span>(!chars.contains(ci))&#123;    <span class="comment">//若不是元音字母</span></span><br><span class="line">                result[i++] = ci;       <span class="comment">//位置不用动，并且开始判断下一个（i++）</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(!chars.contains(cj))&#123;      <span class="comment">//若不是元音字母</span></span><br><span class="line">                result[j--] = cj;           <span class="comment">//位置不用动，并且开始判断下一个（j--）</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;      <span class="comment">//前后两个元音字母互换位置,并开始判断下一轮</span></span><br><span class="line">                result[i++] = cj;</span><br><span class="line">                result[j--] = ci;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="回文字符串"><a href="#回文字符串" class="headerlink" title="回文字符串"></a>回文字符串</h3><p><a href="https://leetcode-cn.com/problems/valid-palindrome-ii/" target="_blank" rel="noopener">#680.valid-palindrome-ii</a></p>
+<p><font color="#ff4500" size="4">题目：给定一个非空字符串 <code>s</code>，最多删除一个字符。判断是否能成为回文字符串。</font> </p>
+<p>示例1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;aba&quot;</span><br><span class="line">输出: True</span><br></pre></td></tr></table></figure>
+
+<p>示例2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;abca&quot;</span><br><span class="line">输出: True</span><br><span class="line">解释: 你可以删除c字符。</span><br></pre></td></tr></table></figure>
+
+<p><font color="#00ffff" size="4">解：</font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 双指针</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">validPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>,j = s.length()-<span class="number">1</span> ; i &lt; j ; i++,j--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s.charAt(i) != s.charAt(j))&#123;     <span class="comment">// 发现一个前后不相等的两个字母，就使用去掉一个字母的机会然后再判断</span></span><br><span class="line">                <span class="keyword">return</span> isPalindrome(s,i+<span class="number">1</span>,j) || isPalindrome(s,i,j-<span class="number">1</span>);  <span class="comment">// 可以去掉前面的字母，也可以去掉后面的字母，有一种情况满足即可</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(String s,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; j)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s.charAt(i++) != s.charAt(j--))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="归并两个有序数组"><a href="#归并两个有序数组" class="headerlink" title="归并两个有序数组"></a>归并两个有序数组</h3><p><a href="https://leetcode-cn.com/problems/merge-sorted-array/" target="_blank" rel="noopener">#88.merge-sorted-array</a></p>
+<p><font color="#ff4500" size="4">题目：给定两个有序整数数组 <em>nums1</em> 和 <em>nums2*，将 *nums2</em> 合并到 <em>nums1</em> 中<em>，</em>使得 <em>num1</em> 成为一个有序数组。</font> </p>
+<p>说明：</p>
+<ul>
+<li>初始化 nums1 和 nums2 的元素数量分别为 m 和 n。</li>
+<li>你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">nums1 = [1,2,3,0,0,0], m = 3</span><br><span class="line">nums2 = [2,5,6],       n = 3</span><br><span class="line"></span><br><span class="line">输出: [1,2,2,3,5,6]</span><br></pre></td></tr></table></figure>
+
+<p><font color="#00ffff" size="4">解：</font></p>
+<p>为了不覆盖掉nums1的元素，nums1数组的后面开始插入数据，每次比较两个数组的最大一个数，依次从后面往前放， 这样，即是nums2数组全部比nums1数组的大也不会出现nums1元素被覆盖的情况</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 双指针</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span> m, <span class="keyword">int</span>[] nums2, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> index1 = m - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> index2 = n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> mergeIndex = m + n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(index1 &gt;= <span class="number">0</span> || index2 &gt;= <span class="number">0</span> )&#123;   <span class="comment">//两个数组都必须遍历完</span></span><br><span class="line">            <span class="keyword">if</span>(index1 &lt; <span class="number">0</span>)&#123;     <span class="comment">// 先判断其中一个数组已经遍历完的情况，避免出现下标为负数的元素的比较</span></span><br><span class="line">                nums1[mergeIndex--] = nums2[index2--];</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(index2 &lt; <span class="number">0</span> )&#123;</span><br><span class="line">                nums1[mergeIndex--] = nums1[index1--];</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;     <span class="comment">// 两个数组都还没遍历完，则比较之后把大的先放上去，小的参加下一轮比较</span></span><br><span class="line">                nums1[mergeIndex--] = nums1[index1] &gt; nums2[index2]?nums1[index1--]:nums2[index2--];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断链表是否存在环"><a href="#判断链表是否存在环" class="headerlink" title="判断链表是否存在环"></a>判断链表是否存在环</h3><p><a href="https://leetcode-cn.com/problems/linked-list-cycle/" target="_blank" rel="noopener">#141.linked-list-cycle</a></p>
+<p><font color="#ff4500" size="4">题目：给定一个链表，判断链表中是否有环。为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。</font> </p>
+<p>示例1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [3,2,0,-4], pos = 1</span><br><span class="line">输出：true</span><br><span class="line">解释：链表中有一个环，其尾部连接到第二个节点。</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B1.png" alt></p>
+<p>示例2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [1,2], pos = 0</span><br><span class="line">输出：true</span><br><span class="line">解释：链表中有一个环，其尾部连接到第一个节点。</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B2.png" alt></p>
+<p><font color="#00ffff" size="4">解：</font></p>
+<p>使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123;</span></span><br><span class="line"><span class="comment"> *         val = x;</span></span><br><span class="line"><span class="comment"> *         next = null;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasCycle</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(head == <span class="keyword">null</span>)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125; </span><br><span class="line">        ListNode l1 = head,l2 = head.next;</span><br><span class="line">        <span class="keyword">while</span>(l1 != <span class="keyword">null</span> &amp;&amp; l2 != <span class="keyword">null</span> &amp;&amp; l2.next != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(l1 == l2)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            l1 = l1.next;</span><br><span class="line">            l2 = l2.next.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+	</div>
+	
+    <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
+          
+        </div>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2019/08/19/多线程之互斥同步/" rel="next" title="多线程之互斥同步">
+                <i class="fa fa-chevron-left"></i> 多线程之互斥同步
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/head_icon.jpg"
+      alt="weilongChen">
+  <p class="site-author-name" itemprop="name">weilongChen</p>
+  <div class="site-description motion-element" itemprop="description">code maker</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">1.</span> <span class="nav-text">双指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有序数组的Two-Sum"><span class="nav-number">1.1.</span> <span class="nav-text">有序数组的Two Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两数平方和"><span class="nav-number">1.2.</span> <span class="nav-text">两数平方和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反转字符串中的元音字母"><span class="nav-number">1.3.</span> <span class="nav-text">反转字符串中的元音字母</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回文字符串"><span class="nav-number">1.4.</span> <span class="nav-text">回文字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并两个有序数组"><span class="nav-number">1.5.</span> <span class="nav-text">归并两个有序数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断链表是否存在环"><span class="nav-number">1.6.</span> <span class="nav-text">判断链表是否存在环</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-envelope"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">weilongChen</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/affix.js?v=7.3.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
