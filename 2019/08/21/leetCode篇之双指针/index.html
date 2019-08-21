@@ -60,19 +60,19 @@
   <meta name="description" content="关于LeetCode算法题的学习笔记">
 <meta name="keywords" content="LeetCode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetCode">
-<meta property="og:url" content="http://yoursite.com/2019/08/21/leetCode/index.html">
+<meta property="og:title" content="leetCode篇之双指针">
+<meta property="og:url" content="http://yoursite.com/2019/08/21/leetCode篇之双指针/index.html">
 <meta property="og:site_name" content="weilongChen">
 <meta property="og:description" content="关于LeetCode算法题的学习笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B1.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B2.png">
-<meta property="og:updated_time" content="2019-08-21T08:49:21.301Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/21/leetCode篇之双指针/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B1.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/21/leetCode篇之双指针/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B2.png">
+<meta property="og:updated_time" content="2019-08-21T11:40:04.109Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetCode">
+<meta name="twitter:title" content="leetCode篇之双指针">
 <meta name="twitter:description" content="关于LeetCode算法题的学习笔记">
-<meta name="twitter:image" content="http://yoursite.com/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B1.png">
-  <link rel="canonical" href="http://yoursite.com/2019/08/21/leetCode/">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/21/leetCode篇之双指针/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B1.png">
+  <link rel="canonical" href="http://yoursite.com/2019/08/21/leetCode篇之双指针/">
 
 
 <script id="page-configurations">
@@ -86,7 +86,7 @@
   };
 </script>
 
-  <title>leetCode | weilongChen</title>
+  <title>leetCode篇之双指针 | weilongChen</title>
   
 
 
@@ -255,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/21/leetCode/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/21/leetCode篇之双指针/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="weilongChen">
@@ -269,7 +269,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">leetCode
+          <h1 class="post-title" itemprop="name headline">leetCode篇之双指针
 
             
           </h1>
@@ -286,7 +286,7 @@
                 
               
 
-              <time title="创建时间：2019-08-21 14:59:43 / 修改时间：16:49:21" itemprop="dateCreated datePublished" datetime="2019-08-21T14:59:43+08:00">2019-08-21</time>
+              <time title="创建时间：2019-08-21 14:59:43 / 修改时间：19:40:04" itemprop="dateCreated datePublished" datetime="2019-08-21T14:59:43+08:00">2019-08-21</time>
             </span>
           
             
@@ -403,14 +403,26 @@
 <p>示例1：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [3,2,0,-4], pos = 1</span><br><span class="line">输出：true</span><br><span class="line">解释：链表中有一个环，其尾部连接到第二个节点。</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B1.png" alt></p>
+<p><img src="/2019/08/21/leetCode篇之双指针/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B1.png" alt></p>
 <p>示例2：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [1,2], pos = 0</span><br><span class="line">输出：true</span><br><span class="line">解释：链表中有一个环，其尾部连接到第一个节点。</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2019/08/21/leetCode/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B2.png" alt></p>
+<p><img src="/2019/08/21/leetCode篇之双指针/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%8E%AF%E7%A4%BA%E4%BE%8B2.png" alt></p>
 <p><font color="#00ffff" size="4">解：</font></p>
 <p>使用双指针，一个指针每次移动一个节点，一个指针每次移动两个节点，如果存在环，那么这两个指针一定会相遇。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123;</span></span><br><span class="line"><span class="comment"> *         val = x;</span></span><br><span class="line"><span class="comment"> *         next = null;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasCycle</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(head == <span class="keyword">null</span>)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125; </span><br><span class="line">        ListNode l1 = head,l2 = head.next;</span><br><span class="line">        <span class="keyword">while</span>(l1 != <span class="keyword">null</span> &amp;&amp; l2 != <span class="keyword">null</span> &amp;&amp; l2.next != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(l1 == l2)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            l1 = l1.next;</span><br><span class="line">            l2 = l2.next.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="最长子序列"><a href="#最长子序列" class="headerlink" title="最长子序列"></a>最长子序列</h3><p><a href="https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/submissions/" target="_blank" rel="noopener">#524.通过删除字母匹配到字典里最长单词</a></p>
+<p><font color="#ff4500" size="4">题目：给定一个字符串和一个字符串字典，找到字典里面最长的字符串，该字符串可以通过删除给定字符串的某些字符来得到。如果答案不止一个，返回长度最长且字典顺序最小的字符串。如果答案不存在，则返回空字符串。</font> </p>
+<p>示例1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s = &quot;abpcplea&quot;, d = [&quot;ale&quot;,&quot;apple&quot;,&quot;monkey&quot;,&quot;plea&quot;]</span><br><span class="line"></span><br><span class="line">输出: </span><br><span class="line">&quot;apple&quot;</span><br></pre></td></tr></table></figure>
+
+<p>示例2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s = &quot;abpcplea&quot;, d = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]</span><br><span class="line"></span><br><span class="line">输出: </span><br><span class="line">&quot;a&quot;</span><br></pre></td></tr></table></figure>
+
+<p><font color="#00ffff" size="4">解：</font></p>
+<p>封装一个判断字符串包含字典里某个字符串的方法（双指针）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 双指针</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">findLongestWord</span><span class="params">(String s, List&lt;String&gt; d)</span> </span>&#123;</span><br><span class="line">        String longestWord = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span>(String target : d)&#123;</span><br><span class="line">            <span class="keyword">int</span> l1 = longestWord.length(),l2 = target.length(); <span class="comment">// 下面判断需用到这两个长度参数，为了简洁，直接用两个变量代替</span></span><br><span class="line">            <span class="keyword">if</span>(l1 &gt; l2 || (l1 == l2 &amp;&amp; longestWord.compareTo(target)&lt;<span class="number">0</span> ))&#123;</span><br><span class="line">                <span class="keyword">continue</span>;   <span class="comment">//下一个字符串没有现在的长或者字典顺序小，直接进入下一轮循环</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(isSubStr(s,target))&#123; </span><br><span class="line">                longestWord = target;   <span class="comment">// 一旦被赋值即为目前为止最长并且字典顺序最小的字符串</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> longestWord;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSubStr</span><span class="params">(String s,String target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>,j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; s.length() &amp;&amp; j &lt; target.length() )&#123;  <span class="comment">// 有一个字符串遍历完了即结束</span></span><br><span class="line">            <span class="keyword">if</span>(s.charAt(i) == target.charAt(j))&#123;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> j == target.length();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -592,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">1.</span> <span class="nav-text">双指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有序数组的Two-Sum"><span class="nav-number">1.1.</span> <span class="nav-text">有序数组的Two Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两数平方和"><span class="nav-number">1.2.</span> <span class="nav-text">两数平方和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反转字符串中的元音字母"><span class="nav-number">1.3.</span> <span class="nav-text">反转字符串中的元音字母</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回文字符串"><span class="nav-number">1.4.</span> <span class="nav-text">回文字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并两个有序数组"><span class="nav-number">1.5.</span> <span class="nav-text">归并两个有序数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断链表是否存在环"><span class="nav-number">1.6.</span> <span class="nav-text">判断链表是否存在环</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">1.</span> <span class="nav-text">双指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有序数组的Two-Sum"><span class="nav-number">1.1.</span> <span class="nav-text">有序数组的Two Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两数平方和"><span class="nav-number">1.2.</span> <span class="nav-text">两数平方和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反转字符串中的元音字母"><span class="nav-number">1.3.</span> <span class="nav-text">反转字符串中的元音字母</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回文字符串"><span class="nav-number">1.4.</span> <span class="nav-text">回文字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并两个有序数组"><span class="nav-number">1.5.</span> <span class="nav-text">归并两个有序数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断链表是否存在环"><span class="nav-number">1.6.</span> <span class="nav-text">判断链表是否存在环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最长子序列"><span class="nav-number">1.7.</span> <span class="nav-text">最长子序列</span></a></li></ol></li></ol></div>
             
 
           </div>
