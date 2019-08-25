@@ -65,12 +65,12 @@
 <meta property="og:site_name" content="weilongChen">
 <meta property="og:description" content="多线程的实现方式、常用方法等。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/08/04/多线程基础/ThreadStates.png">
-<meta property="og:updated_time" content="2019-08-09T07:45:04.160Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/04/多线程基础/%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81.png">
+<meta property="og:updated_time" content="2019-08-24T13:12:14.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程基础">
 <meta name="twitter:description" content="多线程的实现方式、常用方法等。">
-<meta name="twitter:image" content="http://yoursite.com/2019/08/04/多线程基础/ThreadStates.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/04/多线程基础/%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81.png">
   <link rel="canonical" href="http://yoursite.com/2019/08/04/多线程基础/">
 
 
@@ -119,6 +119,13 @@
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
+
+  
+  <!-- 鼠标点击特效 -->
+  <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
 
 </head>
 
@@ -296,7 +303,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-09 15:45:04" itemprop="dateModified" datetime="2019-08-09T15:45:04+08:00">2019-08-09</time>
+                <time title="修改时间：2019-08-24 21:12:14" itemprop="dateModified" datetime="2019-08-24T21:12:14+08:00">2019-08-24</time>
               </span>
             
           
@@ -389,15 +396,8 @@
 <li>wait属于Object的成员方法，一旦一个对象调用了wait方法，必须要采用notify()和notifyAll()方法唤醒该进程</li>
 <li>如果线程拥有某个或某些对象的同步锁，那么在调用了wait()后，这个线程就会释放它持有的所有同步资源，而不限于这个被调用了wait()方法的对象。wait()方法也同样会在wait的过程中有可能被其他对象调用interrupt()方法而产生</li>
 </ul>
-<h1 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h1><p><img src="/2019/08/04/多线程基础/ThreadStates.png" alt></p>
-<ul>
-<li>新建（New），未启动</li>
-<li>可运行状态（Runnable），start()</li>
-<li>运行状态（Running），run()</li>
-<li>阻塞状态（Blocked），sleep()</li>
-<li>等待状态（Waiting），wait()</li>
-<li>销毁状态（Terminated），run()执行结束或者出现异常停止</li>
-</ul>
+<h1 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h1><p><img src="/2019/08/04/多线程基础/%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81.png" alt></p>
+<p>在这里注意到，当线程被唤醒后，也和其他运行中的线程一样去争夺锁资源，并不是一唤醒就能运行。</p>
 <h1 id="Daemon"><a href="#Daemon" class="headerlink" title="Daemon"></a>Daemon</h1><p>守护线程是程序运行时在后台提供服务的线程，不属于程序中不可或缺的部分。</p>
 <p>当所有非守护线程结束时，程序也就终止，同时会杀死所有守护线程。</p>
 <p>main() 属于非守护线程。</p>
