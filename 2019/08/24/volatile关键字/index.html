@@ -66,7 +66,7 @@
 <meta property="og:description" content="volatile是Java虚拟机提供的轻量级的同步机制">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/08/24/volatile关键字/volatile%E9%98%B2%E6%AD%A2%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92.png">
-<meta property="og:updated_time" content="2019-08-24T10:09:01.144Z">
+<meta property="og:updated_time" content="2019-08-28T07:07:42.276Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="volatile关键字">
 <meta name="twitter:description" content="volatile是Java虚拟机提供的轻量级的同步机制">
@@ -293,11 +293,19 @@
                 
               
 
-              <time title="创建时间：2019-08-24 13:57:26 / 修改时间：18:09:01" itemprop="dateCreated datePublished" datetime="2019-08-24T13:57:26+08:00">2019-08-24</time>
+              <time title="创建时间：2019-08-24 13:57:26" itemprop="dateCreated datePublished" datetime="2019-08-24T13:57:26+08:00">2019-08-24</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-28 15:07:42" itemprop="dateModified" datetime="2019-08-28T15:07:42+08:00">2019-08-28</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -334,7 +342,6 @@
 
       
         <center>volatile是Java虚拟机提供的轻量级的同步机制</center>
-
 <a id="more"></a>
 
 <p>在理解volatile之前有必要先回顾一下java内存模型，可参考《<a href="https://usercwl.github.io/2019/08/07/java内存模型与jvm内存模型/" target="_blank" rel="noopener">java内存模型与jvm内存模型</a>》</p>
@@ -347,7 +354,7 @@
 </ul>
 <h2 id="volatile的原理"><a href="#volatile的原理" class="headerlink" title="volatile的原理"></a>volatile的原理</h2><p>分两方面，一是处理流程，二是防止指令重排。</p>
 <h3 id="处理流程（此流程其实也就是java内存模型的体现）"><a href="#处理流程（此流程其实也就是java内存模型的体现）" class="headerlink" title="处理流程（此流程其实也就是java内存模型的体现）"></a>处理流程（此流程其实也就是java内存模型的体现）</h3><ul>
-<li>如果对声明了volatile的变量进行了写操作。jvm就会向处理器发送一条Lock前缀的指令，把这个变量标识为当前条线程独占的状态，将这个变量所在的缓存行的数据写回系统内存。</li>
+<li>如果对声明了volatile的变量进行了写操作。jvm就会向处理器发送一条Lock前缀的指令，将这个变量所在的缓存行的数据写回系统内存。</li>
 <li>当把新修改的数据写回系统内存后，要“让其他线程知道”，为了保持数据的一致性，实现了<strong>缓存一致性协议</strong>，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是否已经过期。当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行置为无效状态。</li>
 <li>当处理器要对这个数据进行修改或读取操作时，会强制重新从系统内存里把数据读到处理器缓存中。</li>
 </ul>
@@ -405,6 +412,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+              <a href="/2019/08/28/学习随笔记录/" rel="prev" title="学习随笔记录">
+                学习随笔记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
     </footer>
@@ -466,7 +477,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -536,7 +547,9 @@
         
           
         
-        <span class="site-state-item-count">13</span>
+          
+        
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
