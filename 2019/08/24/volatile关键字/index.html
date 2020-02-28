@@ -66,7 +66,7 @@
 <meta property="og:description" content="volatile是Java虚拟机提供的轻量级的同步机制">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/08/24/volatile关键字/volatile%E9%98%B2%E6%AD%A2%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92.png">
-<meta property="og:updated_time" content="2019-08-28T07:07:42.276Z">
+<meta property="og:updated_time" content="2019-08-28T09:01:27.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="volatile关键字">
 <meta name="twitter:description" content="volatile是Java虚拟机提供的轻量级的同步机制">
@@ -154,7 +154,7 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-        <p class="site-subtitle">想学习想得睡不着~</p>
+        <p class="site-subtitle">把茶当酒喝</p>
       
   </div>
 
@@ -304,7 +304,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-28 15:07:42" itemprop="dateModified" datetime="2019-08-28T15:07:42+08:00">2019-08-28</time>
+                <time title="修改时间：2019-08-28 17:01:27" itemprop="dateModified" datetime="2019-08-28T17:01:27+08:00">2019-08-28</time>
               </span>
             
           
@@ -373,6 +373,22 @@
 <li>在每一个volatile读操作后面插入一个LoadLoad屏障，避免和后面普通的读操作进行重排（例如后面的普通读用到前面的volatile读的数据，重排后使用的volatile读到的值就是旧的）</li>
 <li>在每一个volatile读操作后面插入一个LoadStore屏障，避免和后面的普通写操作进行重排（道理和上面类似）</li>
 </ul>
+<h2 id="volatile防止指令重排的作用体现例子"><a href="#volatile防止指令重排的作用体现例子" class="headerlink" title="volatile防止指令重排的作用体现例子"></a>volatile防止指令重排的作用体现例子</h2><p>程序：线程A修改 a=1， flag=true，线程B判断如果flag=true，a+=5，并且打印。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testA</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//语句1</span></span><br><span class="line">        a = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//语句2</span></span><br><span class="line">        flag = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testB</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (flag)&#123;</span><br><span class="line">            a = a + <span class="number">5</span>;</span><br><span class="line">            System.out.println(a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        A a = <span class="keyword">new</span> A();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                a.testA();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="string">"A"</span>).start();</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                a.testB();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="string">"B"</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当flag是false时，程序无输出</p>
+<p>当flag是true时，输出有两种情况，一种是5.一种是6</p>
+<p>为5的原因：两个线程的执行顺序是</p>
+<p>A：<code>flag = true</code></p>
+<p>B：<code>if(flag)</code></p>
+<p>B：<code>System.out.println(a)</code></p>
+<p>A：<code>a  = 1</code></p>
+<p>为6的原因：两个线程的执行顺序是</p>
+<p>B：<code>if(flag)</code>在A：<code>flag = true</code>后面</p>
+<p>B：<code>System.out.println(a)</code>在A：<code>a  = 1</code>后面</p>
+<p>理想结果应该是输出6</p>
+<p>让volatile修饰变量a，或者变量flag即可。</p>
+<p>volatile防止指令重排在此处的作用：确定了线程A中的操作顺序一定是顺序，所以无论线程A还是线程B谁先执行，程序只要有输出就会是6。</p>
 <br>
 
 <p>另外，可通过阅读一些面试题来增加自己对volatile关键字的认知</p>
@@ -477,7 +493,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -506,7 +522,11 @@
         
           
         
-        <span class="site-state-item-count">7</span>
+          
+        
+          
+        
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -616,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的作用"><span class="nav-number">1.</span> <span class="nav-text">volatile的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的原理"><span class="nav-number">2.</span> <span class="nav-text">volatile的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#处理流程（此流程其实也就是java内存模型的体现）"><span class="nav-number">2.1.</span> <span class="nav-text">处理流程（此流程其实也就是java内存模型的体现）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理：防止指令重排（添加内存屏障）"><span class="nav-number">2.2.</span> <span class="nav-text">实现原理：防止指令重排（添加内存屏障）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的作用"><span class="nav-number">1.</span> <span class="nav-text">volatile的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的原理"><span class="nav-number">2.</span> <span class="nav-text">volatile的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#处理流程（此流程其实也就是java内存模型的体现）"><span class="nav-number">2.1.</span> <span class="nav-text">处理流程（此流程其实也就是java内存模型的体现）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理：防止指令重排（添加内存屏障）"><span class="nav-number">2.2.</span> <span class="nav-text">实现原理：防止指令重排（添加内存屏障）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile防止指令重排的作用体现例子"><span class="nav-number">3.</span> <span class="nav-text">volatile防止指令重排的作用体现例子</span></a></li></ol></div>
             
 
           </div>
@@ -634,7 +654,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-envelope"></i>
   </span>
