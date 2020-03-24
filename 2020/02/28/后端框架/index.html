@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/web_icon.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+  <meta name="description" content="关于框架知识点的总结记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后端框架">
+<meta property="og:url" content="http://yoursite.com/2020/02/28/后端框架/index.html">
+<meta property="og:site_name" content="weilongChen">
+<meta property="og:description" content="关于框架知识点的总结记录">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-29T14:57:01.041Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后端框架">
+<meta name="twitter:description" content="关于框架知识点的总结记录">
+  <link rel="canonical" href="http://yoursite.com/2020/02/28/后端框架/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>后端框架 | weilongChen</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  
+  <!-- 鼠标点击特效 -->
+  <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+	
+	<!-- 自己增加的代码：fork me github -->
+	<a href="https://github.com/userCwl">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" 
+	class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+	
+	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">weilongChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">把茶当酒喝</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-music">
+      
+    
+
+    <a href="/music/" rel="section"><i class="menu-item-icon fa fa-fw fa-music"></i> <br>音乐</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/后端框架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="weilongChen">
+      <meta itemprop="description" content="code maker">
+      <meta itemprop="image" content="/images/head_icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="weilongChen">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">后端框架
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-28 14:56:21" itemprop="dateCreated datePublished" datetime="2020-02-28T14:56:21+08:00">2020-02-28</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-29 22:57:01" itemprop="dateModified" datetime="2020-02-29T22:57:01+08:00">2020-02-29</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>关于框架知识点的总结记录</center>
+<a id="more"></a>
+
+<h2 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h2><h3 id="什么是Spring？"><a href="#什么是Spring？" class="headerlink" title="什么是Spring？"></a>什么是Spring？</h3><p>Spring是java企业级应用的开源开发框架，主要用来开发java应用，目标是简化java企业级应用开发，通过POJO为基础的编程模型促进良好的编程习惯。</p>
+<h3 id="为什么要用Spring，Spring的好处是什么？"><a href="#为什么要用Spring，Spring的好处是什么？" class="headerlink" title="为什么要用Spring，Spring的好处是什么？"></a>为什么要用Spring，Spring的好处是什么？</h3><p>轻量：Spring是轻量的，基本的版本大约2MB</p>
+<p>控制反转（IOC）：Spring通过控制反转实现了松散耦合，由ioc容器作为中介存储对象，对象只要给出它们的依赖便可，而不是创建对象。</p>
+<p>面向切面编程（AOP）：Spring支持面向切面编程，可方便地对代码的一些共性问题进行解决，如实现事务，日志等对代码进行增强的功能，即将与业务无关的分开来，使程序员专注于业务的开发。</p>
+<p>mvc框架：Spring与Spring mvc能无缝整合。</p>
+<h3 id="Spring有哪些模块？"><a href="#Spring有哪些模块？" class="headerlink" title="Spring有哪些模块？"></a>Spring有哪些模块？</h3><p>Spring Code：核心容器提供Spring框架的基本功能，核心容器的主要组件是BeanFactory，是工厂模式的实现，通过控制反转实现了程序的松散耦合。</p>
+<p>Spring Context：Spring上下文是一个配置文件，向Spring框架提供上下文信息。并且还提供了许多企业服务，如电子邮件，JNDI访问，EJB集成等</p>
+<p>Spring AOP：Spring在AOP模块提供了对面向切面编程的支持，这个模块是Spring应用中实现切面编程的基础。Spring AOP模块为基于Spring的应用程序中的对象提供了事务管理服务。</p>
+<p>Spring JDBC和DAO模块：使用JDBC经常导致大量的重复代码，取得连接、创建语句、处理结果集，然后关闭连接。此模块抽取了这些重复的代码，让开发者对数据库的访问代码更加简洁。</p>
+<p>Spring ORM：对那些更喜欢使用对象/关系映射工具而不是直接使用JDBC的人，Spring提供了ORM模块，Spring并不试图实现它自己的ORM解决方案，而是为几种流行的ORM框架提供了集成方案，如Hibernate，Mybatis。</p>
+<p>Spring Web：Web上下文模块建立于应用上下文模块之上，提供了一个适合于Web应用的上下文。支持与其他Web框架的集成，如Struts、WebWork。还简化了处理多部分请求以及将请求参数绑定到域对象的工作。</p>
+<p>Spring mvc：Spring为构建Web应用提供了一个功能全面的mvc框架。</p>
+<h3 id="什么是IOC容器，它的优点是什么？"><a href="#什么是IOC容器，它的优点是什么？" class="headerlink" title="什么是IOC容器，它的优点是什么？"></a>什么是IOC容器，它的优点是什么？</h3><p>IOC，Inversion of Control，译为“控制反转”，是通过DI，Dependency Injection，译为“依赖注入”实现的。是Spring用工厂模式+配置文件+反射实现的Bean对象管理容器。</p>
+<p>优点：实现了程序的松耦合，并且支持饿汉式初始化和懒加载。</p>
+<h3 id="ApplicationContext通常的实现是什么？"><a href="#ApplicationContext通常的实现是什么？" class="headerlink" title="ApplicationContext通常的实现是什么？"></a>ApplicationContext通常的实现是什么？</h3><p>FileSystemXMLApplicationContext：此容器从一个XML文件中加载beans的定义，配置文件的全路径名必须提供给它的构造函数。</p>
+<p>ClassPathXMLApplicationContext：此容器也从一个XML文件中加载beans的定义，需要正确设置classpath，因为容器将在classpath里找bean配置。</p>
+<p>WebXmlApplicationContext：此容器加载一个XML文件，此文件定义了一个Web应用的所有bean。</p>
+<h3 id="Bean工厂和ApplicationContext有什么区别？"><a href="#Bean工厂和ApplicationContext有什么区别？" class="headerlink" title="Bean工厂和ApplicationContext有什么区别？"></a>Bean工厂和ApplicationContext有什么区别？</h3><p>BeanFactory是Spring里最底层的接口，提供了最简单的容器功能，只提供了实例化对象和拿对象的功能。</p>
+<p>ApplicationContext继承BeanFactory接口，是Spring的更高级容器，提供了更多有用的功能，如国际化（MessageSource）；访问资源，如URL和文件（ResourceLoader）；载入多个（有继承关系）上下文，使得每个上下文都专注于一个特定的层次，比如应用的web层</p>
+<p>区别：</p>
+<p>BeanFactory在启动的时候不会去实例化Bean，有从容器中拿Bean的时候才会去实例化；</p>
+<p>ApplicationContext在启动时就把所有的Bean实例化了，它还可以为Bean配置lazy-init=true来让Bean延迟实例化。</p>
+<h3 id="Spring-beans是什么？"><a href="#Spring-beans是什么？" class="headerlink" title="Spring beans是什么？"></a>Spring beans是什么？</h3><p>Spring beans是那些形成Spring应用的主干的java对象。它们被Spring IOC容器初始化，装配，和管理。</p>
+<h3 id="Spring-bean有哪些作用域？"><a href="#Spring-bean有哪些作用域？" class="headerlink" title="Spring bean有哪些作用域？"></a>Spring bean有哪些作用域？</h3><p>singleton：bean在每个ioc容器中只有一个实例</p>
+<p>prototype：一个bean的定义可以有多个实例</p>
+<p>request：每次http请求都会创建一个bean，该作用域仅在基于web的Spring ApplicationContext情形下有效。</p>
+<p>session：在一个http Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。</p>
+<p>Global-session：在一个全局的http Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。</p>
+<p>补充：默认bean的作用域是singleton。</p>
+<h3 id="Spring框架中的单例bean是线程安全的吗？"><a href="#Spring框架中的单例bean是线程安全的吗？" class="headerlink" title="Spring框架中的单例bean是线程安全的吗？"></a>Spring框架中的单例bean是线程安全的吗？</h3><p>具体看这个bean的定义，若无线程共享的数据，则显然是线程安全的，否则是线程不安全的。</p>
+<h3 id="简述Spring框架中bean的生命周期"><a href="#简述Spring框架中bean的生命周期" class="headerlink" title="简述Spring框架中bean的生命周期"></a>简述Spring框架中bean的生命周期</h3><p>1.实例化一个Bean，也就是常说的new</p>
+<p>2.按照Spring上下文对实例化的Bean进行配置（IOC注入）</p>
+<p>3.若Bean实现了BeanNameAware接口，会调用它实现的setBeanName（String）方法，此处传递的就是Spring配置文件中的Bean的id值</p>
+<p>4.若Bean实现了BeanFactoryAware接口，会调用它实现的setBeanFactory（BeanFactory），传递的是Spring工厂本身。可以用这个方法来获取其他Bean，只需在Spring配置文件中配置一个普通的Bean就可以。</p>
+<p>5.若Bean实现了ApplicationContextAware接口，会调用setApplicationContext（ApplicationContext）方法，传入Spring上下文，这个方式同样可以实现步骤4但比4更好，因为ApplicationContext是BeanFactory的子接口，有更多的实现方法。</p>
+<p>6.若Bean关联了BeanPostProcessor接口，会调用postProcessBeforeInitialization（Object obj，String s）方法，BeanPostProcessor经常被用作是Bean内容的更改，并且由于这个是在Bean初始化结束时调用的那个方法，也可以被应用于内存或者缓存技术。</p>
+<p>7.若Bean在配置文件中配置了init-method属性会自动调用其配置的初始化方法。</p>
+<p>8.若Bean关联了BeanPostProcessor接口，将会调用postProcessAfterInitialization（Object obj，String s）方法。</p>
+<p>9.当Bean不再需要时，会经过清理阶段，若Bean实现了DisposableBean这个接口，会调用那个其实现的destroy（）方法。</p>
+<p>10.最后，若Bean在配置文件配置了destroy-method属性，会自动调用其配置的销毁方法。</p>
+<h3 id="Spring有哪几种自动装配的方式？"><a href="#Spring有哪几种自动装配的方式？" class="headerlink" title="Spring有哪几种自动装配的方式？"></a>Spring有哪几种自动装配的方式？</h3><p>1.byName：根据名称自动匹配，必须将目标Bean的名称和set属性名设置相同。</p>
+<p>2.byType：根据类型自动匹配，若IOC容器有多个与目标Bean类型一致的Bean，将会抛异常。</p>
+<p>3.constructor：根据构造器自动匹配，类似byType，但是要提供构造器参数，如果没有确定的带参数的构造器参数类型，将会抛异常。</p>
+<h3 id="Spring如何开启注解装配？"><a href="#Spring如何开启注解装配？" class="headerlink" title="Spring如何开启注解装配？"></a>Spring如何开启注解装配？</h3><p>在配置文件中配置&lt;context:annotation-config/&gt;元素</p>
+<h3 id="Spring的注解"><a href="#Spring的注解" class="headerlink" title="Spring的注解"></a>Spring的注解</h3><p>@Required注解</p>
+<p>这个注解表明bean的属性必须在配置的时候设置，通过一个bean定义的显式的属性值或通过自动装配，若@Required注解的bean属性未被设置，容器将抛出BeanInitializationException。</p>
+<p>@Autowired</p>
+<p>这个注解提供了更细粒度的控制，包括在何处以及如何完成自动装配。它的用法和@Required一样，修饰setter方法，构造器、属性或者具有任意名称或多个参数的PN方法</p>
+<p>@Qualifier注解</p>
+<p>当有多个相同类型的bean却只有一个需要自动装配时，将@Qualifier注解和@Autowired注解结合使用以消除这种混淆，指定需要装配的确切的bean。</p>
+<h3 id="Spring支持的事务管理类型"><a href="#Spring支持的事务管理类型" class="headerlink" title="Spring支持的事务管理类型"></a>Spring支持的事务管理类型</h3><p>编程式事务管理：通过编程的方式管理事务，有灵活性但难以维护。</p>
+<p>声明式事务管理：将业务代码和事务管理分离，只需要用注解和XML配置来管理事务</p>
+<h2 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h2><h3 id="简述Spring-MVC的工作流程"><a href="#简述Spring-MVC的工作流程" class="headerlink" title="简述Spring MVC的工作流程"></a>简述Spring MVC的工作流程</h3><p>1.用户发送请求至前端控制器DispatcherServlet。</p>
+<p>2.DispatcherServlet收到请求调用HandlerMapping处理器映射器。</p>
+<p>3.HandlerMapping根据url找到具体的处理器，生成处理器对象Handler及处理器拦截器（若有生成）一并返回给DispatcherServlet</p>
+<p>4.DispatcherServlet通过处理器适配器HandlerAdapter调用处理器Handler</p>
+<p>5.执行处理器Handler（也就是Controller）</p>
+<p>6.处理器会放回一个ModelAndView对象给HandlerAdapter</p>
+<p>7.HandlerAdapter将ModelAndView对象返回给前端控制器DispatcherServlet</p>
+<p>8.DispatcherServlet请求试图解析器ViewResolver进行试图解析，得到真正的视图view</p>
+<p>9.ViewResolver返回view给DispatcherServlet</p>
+<p>10.DispatcherServlet对view进行渲染</p>
+<p>11.DispatcherServlet将view响应给用户</p>
+<h3 id="Spring-mvc与Struts2的区别"><a href="#Spring-mvc与Struts2的区别" class="headerlink" title="Spring mvc与Struts2的区别"></a>Spring mvc与Struts2的区别</h3><p>Spring mvc的入口是一个DispatcherServlet前端控制器，而Struts2入口是一个filter过滤器</p>
+<p>Spring mvc是基于方法开发的，请求参数绑定在方法的形参上，一般设计为单例，Struts2是基于类开发的，请求参数绑定在类的成员变量上，只能设计为多例。</p>
+<p>Spring mvc将数据存放在request域中，Struts将数据存放在值栈中。</p>
+<h3 id="如何在web-xml中配置spring-mvc的前端控制器DispatcherServlet？"><a href="#如何在web-xml中配置spring-mvc的前端控制器DispatcherServlet？" class="headerlink" title="如何在web.xml中配置spring mvc的前端控制器DispatcherServlet？"></a>如何在web.xml中配置spring mvc的前端控制器DispatcherServlet？</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- springmvc的前端控制器 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>e3-manager<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- contextConfigLocation不是必须的， 如果不配置contextConfigLocation， springmvc的配置文件默认在：WEB-INF/servlet的name+"-servlet.xml" --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring/springmvc.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>e3-manager<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="如何解决发送post请求时出现的乱码问题？"><a href="#如何解决发送post请求时出现的乱码问题？" class="headerlink" title="如何解决发送post请求时出现的乱码问题？"></a>如何解决发送post请求时出现的乱码问题？</h3><p>在web.xml中配置一个过滤器</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 解决post乱码 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ResponseBody注解的作用是什么？"><a href="#ResponseBody注解的作用是什么？" class="headerlink" title="@ResponseBody注解的作用是什么？"></a>@ResponseBody注解的作用是什么？</h3><p>实现将Controller方法返回的java对象转换为JSON数据格式响应给客户端。</p>
+<h3 id="RequestBody注解的作用是什么？"><a href="#RequestBody注解的作用是什么？" class="headerlink" title="@RequestBody注解的作用是什么？"></a>@RequestBody注解的作用是什么？</h3><p>实现接收http请求的json数据，将json数据转换为java对象进行绑定</p>
+<h2 id="Mybatis"><a href="#Mybatis" class="headerlink" title="Mybatis"></a>Mybatis</h2><h3 id="Mybatis是如何进行分页的？分页插件的原理是什么？"><a href="#Mybatis是如何进行分页的？分页插件的原理是什么？" class="headerlink" title="Mybatis是如何进行分页的？分页插件的原理是什么？"></a>Mybatis是如何进行分页的？分页插件的原理是什么？</h3><p>Mybatis使用RowBounds对象进行分页，它是针对ResultSet结果集执行的内存分页，而非物理分页，可以在sql内直接书写带有物理分页的参数来完成物理分页的功能，也可以使用分页插件来完成物理分页。</p>
+<p>分页插件的基本原理是使用Mybatis提供的插件接口，实现自定义插件，在插件的拦截方法内拦截待执行的sql，然后重写sql，根据dialect方言，添加对应的物理分页语句和物理分页参数。</p>
+<h3 id="Mybatis中，-和-的区别是什么？"><a href="#Mybatis中，-和-的区别是什么？" class="headerlink" title="Mybatis中，#{}和${}的区别是什么？"></a>Mybatis中，#{}和${}的区别是什么？</h3><p>#{}是sql的参数占位符，Mybatis会将sql中的#{}替换为？号，可以有效地防止sql注入，可自动进行java类型和jdbc类型转换。如果parameterType传输单个简单类型值，#{}括号中可以是value或其它名称。</p>
+<p>${}是Properties文件中的变量占位符，通过${}可以将parameterType传入的内容拼接在sql中且不进行jdbc类型转换。如果parameterType传输单个简单类型值，${}括号中只能是value。</p>
+<h3 id="和-的区别是什么？"><a href="#和-的区别是什么？" class="headerlink" title="#{}和${}的区别是什么？"></a>#{}和${}的区别是什么？</h3><p>#{}是预编译处理，会将sql中的#{}替换为？号，调用PreparedStatement的set方法来赋值，可以有效地防止SQL注入。</p>
+<p>${}是字符串替换</p>
+<h3 id="通常一个Xml映射文件会有一个DAO接口与之对应，这个DAO接口的工作原理是什么？"><a href="#通常一个Xml映射文件会有一个DAO接口与之对应，这个DAO接口的工作原理是什么？" class="headerlink" title="通常一个Xml映射文件会有一个DAO接口与之对应，这个DAO接口的工作原理是什么？"></a>通常一个Xml映射文件会有一个DAO接口与之对应，这个DAO接口的工作原理是什么？</h3><p>DAO接口，就是常说的Mapper接口，接口的全限定类名，就是映射文件中的namespace的值，接口的方法名就是映射文件中的MappedStatement的id值，接口方法的参数，就是传递给sql的参数；</p>
+<p>Mapper接口是没有实现类的，当调用接口方法时，接口全限定名+方法名拼接字符串作为key值，可唯一定位一个MappedStatement。</p>
+<p>举例：cwl.mybatis.mappers.StudentDao.findStudentById，可以唯一找到cwl.mybatis.mappers.StudentDao下面id=findStudentById的MappedStatement。在Mybatis中，每一个<select>、<insert>、<delete>、<update>标签都会被解析为一个MappedStatement对象。</update></delete></insert></select></p>
+<p>补充：DAO接口里的方法是不能重载的，因为全限定类名+方法名的保存和寻找策略；DAO接口的工作原理是JDK动态代理，Mybatis运行时会使用JDK动态代理为DAO接口生成代理proxy对象，代理对象proxy会拦截接口方法，转而执行MappedStatement所代表的sql，然后将sql执行的结果返回。</p>
+<h3 id="Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射关系？"><a href="#Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射关系？" class="headerlink" title="Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射关系？"></a>Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射关系？</h3><p>第一种：使用<resultmap>标签，逐一定义列名和对象属性之间的映射关系。</resultmap></p>
+<p>第二种：使用sql列的别名功能，将列别名写为对象的属性名，比如t_name as name（Mybatis不区分大小写）</p>
+<p>有了列名与属性名的映射关系后，Mybatis通过反射创建对象，同时使用反射给对象的属性逐一赋值并返回，那些找不到映射关系的属性，是无法完成赋值的。</p>
+<h2 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h2><h3 id="什么是Spring-Boot？"><a href="#什么是Spring-Boot？" class="headerlink" title="什么是Spring Boot？"></a>什么是Spring Boot？</h3><p>Spring Boot是Spring开源组织下的子项目，是Spring组件一站式解决方案，主要简化了使用Spring的难度，简省了繁重的配置，提供了各种启动器，开发者能快速上手。</p>
+<h3 id="Spring-Boot有哪些优点？"><a href="#Spring-Boot有哪些优点？" class="headerlink" title="Spring Boot有哪些优点？"></a>Spring Boot有哪些优点？</h3><p>1.独立运行</p>
+<p>Spring Boot内嵌了各种Servlet容器，Tomcat、Jetty等，不再需要打成war包部署到容器中，Spring Boot只要打成了一个可执行的jar包就能独立运行，所有的依赖包都在一个jar包内。</p>
+<p>2.简化配置</p>
+<p>3.自动配置</p>
+<p>Spring Boot能根据当前类路径下的类、jar包来自动配置bean，如添加一个spring-boot-starter-web启动器就能拥有web的功能，无需其他配置。</p>
+<p>4.无代码生成和xml配置</p>
+<p>Spring Boot配置过程中无代码生成，也无需xml配置文件就能完成所有配置工作，这一切都是借助于条件注解完成的，这也是Spring 4.x的核心功能之一。</p>
+<p>5.应用监控</p>
+<h3 id="Spring-Boot的核心配置文件有哪几个？区别是什么？"><a href="#Spring-Boot的核心配置文件有哪几个？区别是什么？" class="headerlink" title="Spring Boot的核心配置文件有哪几个？区别是什么？"></a>Spring Boot的核心配置文件有哪几个？区别是什么？</h3><p>1.bootstrap（.yml或.properties）</p>
+<p>2.application（.yml或properties）</p>
+<p>区别：Spring Cloud构建于Spring Boot之上，在Spring Boot中有两种上下文，一种是bootstrap，另一种是application，bootstrap主要用于从额外的资源来加载配置信息，还可以在本地外部配置文件中解密属性。这两个上下文共用一个环境，它是任何Spring应用程序的外部属性的来源。bootstrap里面的属性会优先加载，它们默认也不能被本地相同的配置覆盖</p>
+<p>因此，对比application配置文件，bootstrap配置文件具有以下几个特性：</p>
+<p>bootstrap由父ApplicationContext加载，比application优先加载；</p>
+<p>bootstrap里面的属性不能被覆盖。</p>
+<p>应用场景：</p>
+<p>bootstrap配置文件主要有以下几个应用场景：</p>
+<p>使用Spring Cloud Config配置中心时，这时需要在bootstrap配置文件中添加连接到配置中心的配置属性来加载外部配置中心的配置信息；</p>
+<p>一些固定的不能被覆盖的属性；</p>
+<p>一些加密/解密的场景</p>
+<p>application的应用场景：</p>
+<p>主要用于Spring Boot项目的自动配置。</p>
+<h3 id="Spring-Boot的核心注解是哪个？它主要由哪几个注解组成？"><a href="#Spring-Boot的核心注解是哪个？它主要由哪几个注解组成？" class="headerlink" title="Spring Boot的核心注解是哪个？它主要由哪几个注解组成？"></a>Spring Boot的核心注解是哪个？它主要由哪几个注解组成？</h3><p>启动类的注解是@SpringBootApplication，它是Spring Boot的核心注解，主要组合包含了以下3个注解：</p>
+<p>@SpringBootConfiguration：组合了@Configuration注解，实现配置文件的功能；</p>
+<p>@EnableAutoConfiguration：打开自动配置的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能，@SpringBootApplication（exclude={DataSourceAutoConfiguration.class}）；</p>
+<p>@ComponentScan：Spring组件扫描。</p>
+<h3 id="开启Spring-Boot特性有哪几种方式？"><a href="#开启Spring-Boot特性有哪几种方式？" class="headerlink" title="开启Spring Boot特性有哪几种方式？"></a>开启Spring Boot特性有哪几种方式？</h3><p>1.继承spring-boot-starter-parent项目</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span>  </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>   </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.6.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.导入spring-boot-dependencies项目依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.6.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="运行Spring-Boot有哪几种方式？"><a href="#运行Spring-Boot有哪几种方式？" class="headerlink" title="运行Spring Boot有哪几种方式？"></a>运行Spring Boot有哪几种方式？</h3><p>1.打包用命令或者放到容器中运行</p>
+<p>2.用Maven/Gradle插件运行</p>
+<p>3.直接运行main方法 </p>
+
+    </div>
+
+    
+    
+    
+	
+	<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+	</div>
+	
+    <footer class="post-footer">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2019/09/05/ThreadLocal/" rel="next" title="ThreadLocal">
+                <i class="fa fa-chevron-left"></i> ThreadLocal
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+              <a href="/2020/03/07/Mybatis逆向工程/" rel="prev" title="Mybatis逆向工程">
+                Mybatis逆向工程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjI4MC8yMjc5MQ=="></div>
+  </div>
+  
+  
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/head_icon.jpg"
+      alt="weilongChen">
+  <p class="site-author-name" itemprop="name">weilongChen</p>
+  <div class="site-description motion-element" itemprop="description">code maker</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/userCwl" title="GitHub &rarr; https://github.com/userCwl" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:weilongchen_up@163.com" title="E-Mail &rarr; mailto:weilongchen_up@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.zhihu.com/people/xiao-xiao-bu-shuo-hua-61-27" title="知乎 &rarr; https://www.zhihu.com/people/xiao-xiao-bu-shuo-hua-61-27" rel="noopener" target="_blank"><i class="fa fa-fw fa-gratipay"></i>知乎</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://blog.csdn.net/weixin_43881092" title="CSDN &rarr; https://blog.csdn.net/weixin_43881092" rel="noopener" target="_blank"><i class="fa fa-fw fa-beer"></i>CSDN</a>
+      </span>
+    
+  </div>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring"><span class="nav-number">1.</span> <span class="nav-text">Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Spring？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Spring？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要用Spring，Spring的好处是什么？"><span class="nav-number">1.2.</span> <span class="nav-text">为什么要用Spring，Spring的好处是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring有哪些模块？"><span class="nav-number">1.3.</span> <span class="nav-text">Spring有哪些模块？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是IOC容器，它的优点是什么？"><span class="nav-number">1.4.</span> <span class="nav-text">什么是IOC容器，它的优点是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ApplicationContext通常的实现是什么？"><span class="nav-number">1.5.</span> <span class="nav-text">ApplicationContext通常的实现是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean工厂和ApplicationContext有什么区别？"><span class="nav-number">1.6.</span> <span class="nav-text">Bean工厂和ApplicationContext有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-beans是什么？"><span class="nav-number">1.7.</span> <span class="nav-text">Spring beans是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-bean有哪些作用域？"><span class="nav-number">1.8.</span> <span class="nav-text">Spring bean有哪些作用域？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring框架中的单例bean是线程安全的吗？"><span class="nav-number">1.9.</span> <span class="nav-text">Spring框架中的单例bean是线程安全的吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简述Spring框架中bean的生命周期"><span class="nav-number">1.10.</span> <span class="nav-text">简述Spring框架中bean的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring有哪几种自动装配的方式？"><span class="nav-number">1.11.</span> <span class="nav-text">Spring有哪几种自动装配的方式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring如何开启注解装配？"><span class="nav-number">1.12.</span> <span class="nav-text">Spring如何开启注解装配？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring的注解"><span class="nav-number">1.13.</span> <span class="nav-text">Spring的注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring支持的事务管理类型"><span class="nav-number">1.14.</span> <span class="nav-text">Spring支持的事务管理类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-MVC"><span class="nav-number">2.</span> <span class="nav-text">Spring MVC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简述Spring-MVC的工作流程"><span class="nav-number">2.1.</span> <span class="nav-text">简述Spring MVC的工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-mvc与Struts2的区别"><span class="nav-number">2.2.</span> <span class="nav-text">Spring mvc与Struts2的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何在web-xml中配置spring-mvc的前端控制器DispatcherServlet？"><span class="nav-number">2.3.</span> <span class="nav-text">如何在web.xml中配置spring mvc的前端控制器DispatcherServlet？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何解决发送post请求时出现的乱码问题？"><span class="nav-number">2.4.</span> <span class="nav-text">如何解决发送post请求时出现的乱码问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResponseBody注解的作用是什么？"><span class="nav-number">2.5.</span> <span class="nav-text">@ResponseBody注解的作用是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RequestBody注解的作用是什么？"><span class="nav-number">2.6.</span> <span class="nav-text">@RequestBody注解的作用是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis"><span class="nav-number">3.</span> <span class="nav-text">Mybatis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis是如何进行分页的？分页插件的原理是什么？"><span class="nav-number">3.1.</span> <span class="nav-text">Mybatis是如何进行分页的？分页插件的原理是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis中，-和-的区别是什么？"><span class="nav-number">3.2.</span> <span class="nav-text">Mybatis中，#{}和${}的区别是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#和-的区别是什么？"><span class="nav-number">3.3.</span> <span class="nav-text">#{}和${}的区别是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通常一个Xml映射文件会有一个DAO接口与之对应，这个DAO接口的工作原理是什么？"><span class="nav-number">3.4.</span> <span class="nav-text">通常一个Xml映射文件会有一个DAO接口与之对应，这个DAO接口的工作原理是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射关系？"><span class="nav-number">3.5.</span> <span class="nav-text">Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射关系？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Boot"><span class="nav-number">4.</span> <span class="nav-text">Spring Boot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Spring-Boot？"><span class="nav-number">4.1.</span> <span class="nav-text">什么是Spring Boot？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot有哪些优点？"><span class="nav-number">4.2.</span> <span class="nav-text">Spring Boot有哪些优点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot的核心配置文件有哪几个？区别是什么？"><span class="nav-number">4.3.</span> <span class="nav-text">Spring Boot的核心配置文件有哪几个？区别是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot的核心注解是哪个？它主要由哪几个注解组成？"><span class="nav-number">4.4.</span> <span class="nav-text">Spring Boot的核心注解是哪个？它主要由哪几个注解组成？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启Spring-Boot特性有哪几种方式？"><span class="nav-number">4.5.</span> <span class="nav-text">开启Spring Boot特性有哪几种方式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行Spring-Boot有哪几种方式？"><span class="nav-number">4.6.</span> <span class="nav-text">运行Spring Boot有哪几种方式？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-envelope"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">weilongChen</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/affix.js?v=7.3.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
